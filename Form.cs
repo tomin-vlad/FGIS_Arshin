@@ -248,8 +248,6 @@ namespace FGIS_Arshin
 
                     if (IsValidJson(result))
                     {
-                        Console.WriteLine(apiUrl); // Отладка
-
                         var obj = JToken.Parse(result);
                         if (obj["result"]["count"] != null && obj["result"]["items"] != null)
                         {
