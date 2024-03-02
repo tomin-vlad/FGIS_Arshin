@@ -87,6 +87,9 @@ namespace FGIS_Arshin
             checkBoxField10.Checked = Properties.Settings.Default.field10 ? true : false;
             checkBoxField11.Checked = Properties.Settings.Default.field11 ? true : false;
 
+            textBoxOwner.Text = Properties.Settings.Default.owner_val != "" ? Properties.Settings.Default.owner_val : "";
+            checkBoxOwner.Checked = Properties.Settings.Default.owner_on ? true : false;
+
             textBoxUnload.Text = Properties.Settings.Default.unload != "" && Directory.Exists(Properties.Settings.Default.unload) ? Properties.Settings.Default.unload : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             checkValidate();
@@ -131,7 +134,7 @@ namespace FGIS_Arshin
 
                 labelPercent.Visible = true;
 
-                int totalIteration = 0;
+                int itemsCount = 0, totalIteration = 0;
                 string csvFilePath = textBoxUnload.Text + "\\data_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".csv";
 
                 using (StreamWriter writer = new StreamWriter(csvFilePath, false, Encoding.UTF8))
@@ -139,6 +142,8 @@ namespace FGIS_Arshin
                     for (int i = 0; i < iterations; i++)
                     {
                         request = postRequest();
+                        Thread.Sleep((int)numericUpDownPause.Value);
+
                         if (request != null)
                         {
                             obj = JToken.Parse(request);
@@ -164,7 +169,28 @@ namespace FGIS_Arshin
                                     (item["result_docnum"] != null && checkBoxField10.Checked ? EscapeField(item["result_docnum"].ToString()) : "") + ";" +
                                     (item["applicability"] != null && checkBoxField11.Checked ? EscapeField(item["applicability"].ToString()) : "");
 
-                                writer.WriteLine($"{result}");
+                                if (checkBoxOwner.Checked && textBoxOwner.Text != "" && item["vri_id"] != null)
+                                {
+                                    var request2 = getExtended(item["vri_id"].ToString());
+                                    Thread.Sleep((int)numericUpDownPause.Value);
+
+                                    if (request2 != null)
+                                    {
+                                        var obj2 = JToken.Parse(request2);
+                                        if (obj2["result"]["vriInfo"]["miOwner"] != null)
+                                        {
+                                            if (obj2["result"]["vriInfo"]["miOwner"].ToString().IndexOf(textBoxOwner.Text, StringComparison.OrdinalIgnoreCase) != -1)
+                                            {
+                                                writer.WriteLine($"{result}");
+                                                itemsCount++;
+                                            }
+                                            
+                                        }
+                                    }
+                                } else
+                                {
+                                    writer.WriteLine($"{result}");
+                                }
 
                                 progressBarProcess.Value = (int)Math.Round((double)totalIteration / count * 100);
                                 labelPercent.Text = progressBarProcess.Value.ToString() + "%";
@@ -177,8 +203,6 @@ namespace FGIS_Arshin
                             break;
                         }
                         
-                        Thread.Sleep((int)numericUpDownPause.Value);
-
                         if (start + (int)numericUpDownRows.Value <= 99999)
                         {
                             start = start + (int)numericUpDownRows.Value;
@@ -190,8 +214,12 @@ namespace FGIS_Arshin
                     }
                 }
 
+                string msg = (checkBoxOwner.Checked && textBoxOwner.Text != "") ? 
+                    "Было обработано " + totalIteration-- + " записей. Из них успешно выгружено в CSV файл \"" + csvFilePath + "\" " + itemsCount + " записей." :
+                    "Было обаботано и успешно выгружено в CSV файл \"" + csvFilePath + "\" " + totalIteration + " записей.";
+
                 MessageBox.Show(
-                    "В CSV-файл " + csvFilePath + " было успешно выгружено " + totalIteration-- + " записей.",
+                    msg,
                     Text,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
@@ -286,6 +314,64 @@ namespace FGIS_Arshin
             return null;
         }
 
+        public string getExtended(string vri_id)
+        {
+            var apiUrl = new Uri("https://fgis.gost.ru/fundmetrology/eapi/vri/" + vri_id);
+            int tries = (int)numericUpDownTries.Value;
+            string err_msg = "";
+
+            while (tries-- != 0)
+            {
+                try
+                {
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                    WebRequest req = WebRequest.Create(apiUrl);
+                    WebResponse resp = req.GetResponse();
+                    Stream stream = resp.GetResponseStream();
+                    StreamReader sr = new StreamReader(stream);
+                    string result = sr.ReadToEnd();
+                    sr.Close();
+
+                    if (IsValidJson(result))
+                    {
+                        var obj = JToken.Parse(result);
+                        if (obj["result"]["miInfo"] != null && obj["result"]["vriInfo"] != null)
+                        {
+                            return result;
+                        }
+                        else if (obj["status"] != null && obj["message"] != null)
+                        {
+                            MessageBox.Show(obj["message"].ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return null;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Неизвестная ошибка в ответе.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Не удается разобрать JSON-ответ.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.Contains("(500)"))
+                    {
+                        Thread.Sleep((int)numericUpDownPause.Value);
+                        err_msg = ex.Message;
+                        continue;
+                    }
+                    MessageBox.Show(ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+                }
+            }
+            MessageBox.Show(err_msg, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return null;
+        }
+
         private static bool IsValidJson(string strInput)
         {
             if (string.IsNullOrWhiteSpace(strInput)) { return false; }
@@ -300,12 +386,10 @@ namespace FGIS_Arshin
                 }
                 catch (JsonReaderException jex)
                 {
-                    Console.WriteLine(jex.Message);
                     return false;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
                     return false;
                 }
             }
@@ -346,7 +430,7 @@ namespace FGIS_Arshin
                 numericUpDownTries.Value < numericUpDownTries.Minimum | numericUpDownTries.Value > numericUpDownTries.Maximum |
                 (!checkBoxField1.Checked && !checkBoxField2.Checked && !checkBoxField3.Checked && !checkBoxField4.Checked &&
                 !checkBoxField5.Checked && !checkBoxField6.Checked && !checkBoxField7.Checked && !checkBoxField8.Checked &&
-                !checkBoxField9.Checked && !checkBoxField10.Checked && !checkBoxField11.Checked))
+                !checkBoxField9.Checked && !checkBoxField10.Checked && !checkBoxField11.Checked) | (textBoxOwner.Text == "" && checkBoxOwner.Checked))
             {
                 buttonStart.Enabled = false;
             } else
@@ -680,6 +764,22 @@ namespace FGIS_Arshin
             {
                 textBoxUnload.Text = DirProject.SelectedPath;
             }
+        }
+
+        private void textBoxOwner_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.owner_val = textBoxOwner.Text;
+            Properties.Settings.Default.Save();
+
+            checkValidate();
+        }
+
+        private void checkBoxOwner_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.owner_on = checkBoxOwner.Checked ? true : false;
+            Properties.Settings.Default.Save();
+
+            checkValidate();
         }
 
         private void textBoxUnload_TextChanged(object sender, EventArgs e)

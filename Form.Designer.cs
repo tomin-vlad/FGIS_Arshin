@@ -96,6 +96,10 @@
             this.textBoxOrgTitle = new System.Windows.Forms.TextBox();
             this.labelOrgTitle = new System.Windows.Forms.Label();
             this.tabPageSettings = new System.Windows.Forms.TabPage();
+            this.groupBoxExtended = new System.Windows.Forms.GroupBox();
+            this.textBoxOwner = new System.Windows.Forms.TextBox();
+            this.labelOwner = new System.Windows.Forms.Label();
+            this.checkBoxOwner = new System.Windows.Forms.CheckBox();
             this.buttonUnload = new System.Windows.Forms.Button();
             this.textBoxUnload = new System.Windows.Forms.TextBox();
             this.labelUnload = new System.Windows.Forms.Label();
@@ -106,6 +110,7 @@
             this.tabControl1.SuspendLayout();
             this.tabPageFilter.SuspendLayout();
             this.tabPageSettings.SuspendLayout();
+            this.groupBoxExtended.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelTitle
@@ -249,7 +254,7 @@
             // buttonStart
             // 
             this.buttonStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonStart.Location = new System.Drawing.Point(12, 448);
+            this.buttonStart.Location = new System.Drawing.Point(12, 494);
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.Size = new System.Drawing.Size(566, 39);
             this.buttonStart.TabIndex = 18;
@@ -260,7 +265,7 @@
             // progressBarProcess
             // 
             this.progressBarProcess.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.progressBarProcess.Location = new System.Drawing.Point(12, 493);
+            this.progressBarProcess.Location = new System.Drawing.Point(12, 539);
             this.progressBarProcess.MarqueeAnimationSpeed = 0;
             this.progressBarProcess.Name = "progressBarProcess";
             this.progressBarProcess.Size = new System.Drawing.Size(566, 23);
@@ -269,7 +274,7 @@
             // labelPercent
             // 
             this.labelPercent.AutoSize = true;
-            this.labelPercent.Location = new System.Drawing.Point(285, 520);
+            this.labelPercent.Location = new System.Drawing.Point(285, 566);
             this.labelPercent.Name = "labelPercent";
             this.labelPercent.Size = new System.Drawing.Size(21, 13);
             this.labelPercent.TabIndex = 20;
@@ -290,12 +295,12 @@
             this.groupBoxFields.Controls.Add(this.checkBoxField2);
             this.groupBoxFields.Controls.Add(this.checkBoxField1);
             this.groupBoxFields.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBoxFields.Location = new System.Drawing.Point(24, 142);
+            this.groupBoxFields.Location = new System.Drawing.Point(24, 135);
             this.groupBoxFields.Name = "groupBoxFields";
-            this.groupBoxFields.Size = new System.Drawing.Size(512, 150);
+            this.groupBoxFields.Size = new System.Drawing.Size(512, 147);
             this.groupBoxFields.TabIndex = 21;
             this.groupBoxFields.TabStop = false;
-            this.groupBoxFields.Text = "Выгружаемые поля";
+            this.groupBoxFields.Text = "Основные выгружаемые поля";
             // 
             // checkBoxField11
             // 
@@ -487,7 +492,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 36);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(566, 405);
+            this.tabControl1.Size = new System.Drawing.Size(566, 439);
             this.tabControl1.TabIndex = 25;
             // 
             // tabPageFilter
@@ -531,7 +536,7 @@
             this.tabPageFilter.Location = new System.Drawing.Point(4, 25);
             this.tabPageFilter.Name = "tabPageFilter";
             this.tabPageFilter.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFilter.Size = new System.Drawing.Size(558, 376);
+            this.tabPageFilter.Size = new System.Drawing.Size(558, 410);
             this.tabPageFilter.TabIndex = 1;
             this.tabPageFilter.Text = "Фильтр";
             this.tabPageFilter.UseVisualStyleBackColor = true;
@@ -544,7 +549,7 @@
             "Нет",
             "Да",
             "Не выбрано"});
-            this.comboBoxApplicability.Location = new System.Drawing.Point(233, 330);
+            this.comboBoxApplicability.Location = new System.Drawing.Point(233, 347);
             this.comboBoxApplicability.Name = "comboBoxApplicability";
             this.comboBoxApplicability.Size = new System.Drawing.Size(235, 24);
             this.comboBoxApplicability.TabIndex = 39;
@@ -554,7 +559,7 @@
             // 
             this.labelApplicability.AutoSize = true;
             this.labelApplicability.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelApplicability.Location = new System.Drawing.Point(16, 333);
+            this.labelApplicability.Location = new System.Drawing.Point(16, 350);
             this.labelApplicability.Name = "labelApplicability";
             this.labelApplicability.Size = new System.Drawing.Size(92, 16);
             this.labelApplicability.TabIndex = 36;
@@ -564,7 +569,7 @@
             // 
             this.checkBoxSticker.AutoSize = true;
             this.checkBoxSticker.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBoxSticker.Location = new System.Drawing.Point(474, 306);
+            this.checkBoxSticker.Location = new System.Drawing.Point(474, 323);
             this.checkBoxSticker.Name = "checkBoxSticker";
             this.checkBoxSticker.Size = new System.Drawing.Size(67, 20);
             this.checkBoxSticker.TabIndex = 35;
@@ -575,7 +580,7 @@
             // textBoxSticker
             // 
             this.textBoxSticker.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxSticker.Location = new System.Drawing.Point(233, 302);
+            this.textBoxSticker.Location = new System.Drawing.Point(233, 319);
             this.textBoxSticker.Name = "textBoxSticker";
             this.textBoxSticker.Size = new System.Drawing.Size(235, 22);
             this.textBoxSticker.TabIndex = 34;
@@ -585,7 +590,7 @@
             // 
             this.labelSticker.AutoSize = true;
             this.labelSticker.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelSticker.Location = new System.Drawing.Point(16, 305);
+            this.labelSticker.Location = new System.Drawing.Point(16, 322);
             this.labelSticker.Name = "labelSticker";
             this.labelSticker.Size = new System.Drawing.Size(115, 16);
             this.labelSticker.TabIndex = 33;
@@ -595,7 +600,7 @@
             // 
             this.checkBoxDocnum.AutoSize = true;
             this.checkBoxDocnum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBoxDocnum.Location = new System.Drawing.Point(474, 278);
+            this.checkBoxDocnum.Location = new System.Drawing.Point(474, 295);
             this.checkBoxDocnum.Name = "checkBoxDocnum";
             this.checkBoxDocnum.Size = new System.Drawing.Size(67, 20);
             this.checkBoxDocnum.TabIndex = 32;
@@ -606,7 +611,7 @@
             // textBoxDocnum
             // 
             this.textBoxDocnum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxDocnum.Location = new System.Drawing.Point(233, 274);
+            this.textBoxDocnum.Location = new System.Drawing.Point(233, 291);
             this.textBoxDocnum.Name = "textBoxDocnum";
             this.textBoxDocnum.Size = new System.Drawing.Size(235, 22);
             this.textBoxDocnum.TabIndex = 31;
@@ -616,7 +621,7 @@
             // 
             this.labelDocnum.AutoSize = true;
             this.labelDocnum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelDocnum.Location = new System.Drawing.Point(16, 277);
+            this.labelDocnum.Location = new System.Drawing.Point(16, 294);
             this.labelDocnum.Name = "labelDocnum";
             this.labelDocnum.Size = new System.Drawing.Size(156, 16);
             this.labelDocnum.TabIndex = 30;
@@ -626,7 +631,7 @@
             // 
             this.labelValid.AutoSize = true;
             this.labelValid.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelValid.Location = new System.Drawing.Point(16, 249);
+            this.labelValid.Location = new System.Drawing.Point(16, 266);
             this.labelValid.Name = "labelValid";
             this.labelValid.Size = new System.Drawing.Size(127, 16);
             this.labelValid.TabIndex = 26;
@@ -638,7 +643,7 @@
             this.dateTimePickerValidStart.CustomFormat = "";
             this.dateTimePickerValidStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dateTimePickerValidStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerValidStart.Location = new System.Drawing.Point(233, 246);
+            this.dateTimePickerValidStart.Location = new System.Drawing.Point(233, 263);
             this.dateTimePickerValidStart.MinDate = new System.DateTime(2010, 1, 1, 0, 0, 0, 0);
             this.dateTimePickerValidStart.Name = "dateTimePickerValidStart";
             this.dateTimePickerValidStart.ShowCheckBox = true;
@@ -650,7 +655,7 @@
             // 
             this.labelValidTo.AutoSize = true;
             this.labelValidTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelValidTo.Location = new System.Drawing.Point(345, 251);
+            this.labelValidTo.Location = new System.Drawing.Point(345, 268);
             this.labelValidTo.Name = "labelValidTo";
             this.labelValidTo.Size = new System.Drawing.Size(11, 16);
             this.labelValidTo.TabIndex = 28;
@@ -662,7 +667,7 @@
             this.dateTimePickerValidEnd.CustomFormat = "";
             this.dateTimePickerValidEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dateTimePickerValidEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerValidEnd.Location = new System.Drawing.Point(362, 246);
+            this.dateTimePickerValidEnd.Location = new System.Drawing.Point(362, 263);
             this.dateTimePickerValidEnd.MinDate = new System.DateTime(2010, 1, 1, 0, 0, 0, 0);
             this.dateTimePickerValidEnd.Name = "dateTimePickerValidEnd";
             this.dateTimePickerValidEnd.ShowCheckBox = true;
@@ -674,7 +679,7 @@
             // 
             this.labelYear.AutoSize = true;
             this.labelYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelYear.Location = new System.Drawing.Point(16, 27);
+            this.labelYear.Location = new System.Drawing.Point(16, 44);
             this.labelYear.Name = "labelYear";
             this.labelYear.Size = new System.Drawing.Size(30, 16);
             this.labelYear.TabIndex = 24;
@@ -686,7 +691,7 @@
             this.dateTimePickerYear.CustomFormat = "yyyy";
             this.dateTimePickerYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dateTimePickerYear.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerYear.Location = new System.Drawing.Point(233, 24);
+            this.dateTimePickerYear.Location = new System.Drawing.Point(233, 41);
             this.dateTimePickerYear.MinDate = new System.DateTime(2010, 1, 1, 0, 0, 0, 0);
             this.dateTimePickerYear.Name = "dateTimePickerYear";
             this.dateTimePickerYear.ShowCheckBox = true;
@@ -698,7 +703,7 @@
             // 
             this.labelVerification.AutoSize = true;
             this.labelVerification.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelVerification.Location = new System.Drawing.Point(16, 221);
+            this.labelVerification.Location = new System.Drawing.Point(16, 238);
             this.labelVerification.Name = "labelVerification";
             this.labelVerification.Size = new System.Drawing.Size(97, 16);
             this.labelVerification.TabIndex = 18;
@@ -710,7 +715,7 @@
             this.dateTimePickerVerificationStart.CustomFormat = "";
             this.dateTimePickerVerificationStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dateTimePickerVerificationStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerVerificationStart.Location = new System.Drawing.Point(233, 218);
+            this.dateTimePickerVerificationStart.Location = new System.Drawing.Point(233, 235);
             this.dateTimePickerVerificationStart.MinDate = new System.DateTime(2010, 1, 1, 0, 0, 0, 0);
             this.dateTimePickerVerificationStart.Name = "dateTimePickerVerificationStart";
             this.dateTimePickerVerificationStart.ShowCheckBox = true;
@@ -722,7 +727,7 @@
             // 
             this.labelVerificationTo.AutoSize = true;
             this.labelVerificationTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelVerificationTo.Location = new System.Drawing.Point(345, 223);
+            this.labelVerificationTo.Location = new System.Drawing.Point(345, 240);
             this.labelVerificationTo.Name = "labelVerificationTo";
             this.labelVerificationTo.Size = new System.Drawing.Size(11, 16);
             this.labelVerificationTo.TabIndex = 21;
@@ -734,7 +739,7 @@
             this.dateTimePickerVerificationEnd.CustomFormat = "";
             this.dateTimePickerVerificationEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dateTimePickerVerificationEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerVerificationEnd.Location = new System.Drawing.Point(362, 218);
+            this.dateTimePickerVerificationEnd.Location = new System.Drawing.Point(362, 235);
             this.dateTimePickerVerificationEnd.MinDate = new System.DateTime(2010, 1, 1, 0, 0, 0, 0);
             this.dateTimePickerVerificationEnd.Name = "dateTimePickerVerificationEnd";
             this.dateTimePickerVerificationEnd.ShowCheckBox = true;
@@ -746,7 +751,7 @@
             // 
             this.checkBoxMiNumber.AutoSize = true;
             this.checkBoxMiNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBoxMiNumber.Location = new System.Drawing.Point(474, 194);
+            this.checkBoxMiNumber.Location = new System.Drawing.Point(474, 211);
             this.checkBoxMiNumber.Name = "checkBoxMiNumber";
             this.checkBoxMiNumber.Size = new System.Drawing.Size(67, 20);
             this.checkBoxMiNumber.TabIndex = 17;
@@ -757,7 +762,7 @@
             // textBoxMiNumber
             // 
             this.textBoxMiNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxMiNumber.Location = new System.Drawing.Point(233, 190);
+            this.textBoxMiNumber.Location = new System.Drawing.Point(233, 207);
             this.textBoxMiNumber.Name = "textBoxMiNumber";
             this.textBoxMiNumber.Size = new System.Drawing.Size(235, 22);
             this.textBoxMiNumber.TabIndex = 16;
@@ -767,7 +772,7 @@
             // 
             this.labelMiNumber.AutoSize = true;
             this.labelMiNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelMiNumber.Location = new System.Drawing.Point(16, 193);
+            this.labelMiNumber.Location = new System.Drawing.Point(16, 210);
             this.labelMiNumber.Name = "labelMiNumber";
             this.labelMiNumber.Size = new System.Drawing.Size(173, 16);
             this.labelMiNumber.TabIndex = 15;
@@ -777,7 +782,7 @@
             // 
             this.checkBoxMiModification.AutoSize = true;
             this.checkBoxMiModification.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBoxMiModification.Location = new System.Drawing.Point(474, 166);
+            this.checkBoxMiModification.Location = new System.Drawing.Point(474, 183);
             this.checkBoxMiModification.Name = "checkBoxMiModification";
             this.checkBoxMiModification.Size = new System.Drawing.Size(67, 20);
             this.checkBoxMiModification.TabIndex = 14;
@@ -788,7 +793,7 @@
             // textBoxMiModification
             // 
             this.textBoxMiModification.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxMiModification.Location = new System.Drawing.Point(233, 162);
+            this.textBoxMiModification.Location = new System.Drawing.Point(233, 179);
             this.textBoxMiModification.Name = "textBoxMiModification";
             this.textBoxMiModification.Size = new System.Drawing.Size(235, 22);
             this.textBoxMiModification.TabIndex = 13;
@@ -798,7 +803,7 @@
             // 
             this.labelMiModification.AutoSize = true;
             this.labelMiModification.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelMiModification.Location = new System.Drawing.Point(16, 165);
+            this.labelMiModification.Location = new System.Drawing.Point(16, 182);
             this.labelMiModification.Name = "labelMiModification";
             this.labelMiModification.Size = new System.Drawing.Size(121, 16);
             this.labelMiModification.TabIndex = 12;
@@ -808,7 +813,7 @@
             // 
             this.checkBoxMitNotation.AutoSize = true;
             this.checkBoxMitNotation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBoxMitNotation.Location = new System.Drawing.Point(474, 138);
+            this.checkBoxMitNotation.Location = new System.Drawing.Point(474, 155);
             this.checkBoxMitNotation.Name = "checkBoxMitNotation";
             this.checkBoxMitNotation.Size = new System.Drawing.Size(67, 20);
             this.checkBoxMitNotation.TabIndex = 11;
@@ -819,7 +824,7 @@
             // textBoxMitNotation
             // 
             this.textBoxMitNotation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxMitNotation.Location = new System.Drawing.Point(233, 134);
+            this.textBoxMitNotation.Location = new System.Drawing.Point(233, 151);
             this.textBoxMitNotation.Name = "textBoxMitNotation";
             this.textBoxMitNotation.Size = new System.Drawing.Size(235, 22);
             this.textBoxMitNotation.TabIndex = 10;
@@ -829,7 +834,7 @@
             // 
             this.labelMitNotation.AutoSize = true;
             this.labelMitNotation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelMitNotation.Location = new System.Drawing.Point(16, 137);
+            this.labelMitNotation.Location = new System.Drawing.Point(16, 154);
             this.labelMitNotation.Name = "labelMitNotation";
             this.labelMitNotation.Size = new System.Drawing.Size(54, 16);
             this.labelMitNotation.TabIndex = 9;
@@ -839,7 +844,7 @@
             // 
             this.checkBoxMitTitle.AutoSize = true;
             this.checkBoxMitTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBoxMitTitle.Location = new System.Drawing.Point(474, 110);
+            this.checkBoxMitTitle.Location = new System.Drawing.Point(474, 127);
             this.checkBoxMitTitle.Name = "checkBoxMitTitle";
             this.checkBoxMitTitle.Size = new System.Drawing.Size(67, 20);
             this.checkBoxMitTitle.TabIndex = 8;
@@ -850,7 +855,7 @@
             // textBoxMitTitle
             // 
             this.textBoxMitTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxMitTitle.Location = new System.Drawing.Point(233, 106);
+            this.textBoxMitTitle.Location = new System.Drawing.Point(233, 123);
             this.textBoxMitTitle.Name = "textBoxMitTitle";
             this.textBoxMitTitle.Size = new System.Drawing.Size(235, 22);
             this.textBoxMitTitle.TabIndex = 7;
@@ -860,7 +865,7 @@
             // 
             this.labelMitTitle.AutoSize = true;
             this.labelMitTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelMitTitle.Location = new System.Drawing.Point(16, 109);
+            this.labelMitTitle.Location = new System.Drawing.Point(16, 126);
             this.labelMitTitle.Name = "labelMitTitle";
             this.labelMitTitle.Size = new System.Drawing.Size(162, 16);
             this.labelMitTitle.TabIndex = 6;
@@ -870,7 +875,7 @@
             // 
             this.checkBoxMitNumber.AutoSize = true;
             this.checkBoxMitNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBoxMitNumber.Location = new System.Drawing.Point(474, 82);
+            this.checkBoxMitNumber.Location = new System.Drawing.Point(474, 99);
             this.checkBoxMitNumber.Name = "checkBoxMitNumber";
             this.checkBoxMitNumber.Size = new System.Drawing.Size(67, 20);
             this.checkBoxMitNumber.TabIndex = 5;
@@ -881,7 +886,7 @@
             // textBoxMitNumber
             // 
             this.textBoxMitNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxMitNumber.Location = new System.Drawing.Point(233, 78);
+            this.textBoxMitNumber.Location = new System.Drawing.Point(233, 95);
             this.textBoxMitNumber.Name = "textBoxMitNumber";
             this.textBoxMitNumber.Size = new System.Drawing.Size(235, 22);
             this.textBoxMitNumber.TabIndex = 4;
@@ -891,7 +896,7 @@
             // 
             this.labelMitNumber.AutoSize = true;
             this.labelMitNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelMitNumber.Location = new System.Drawing.Point(16, 81);
+            this.labelMitNumber.Location = new System.Drawing.Point(16, 98);
             this.labelMitNumber.Name = "labelMitNumber";
             this.labelMitNumber.Size = new System.Drawing.Size(133, 16);
             this.labelMitNumber.TabIndex = 3;
@@ -901,7 +906,7 @@
             // 
             this.checkBoxOrgTitle.AutoSize = true;
             this.checkBoxOrgTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBoxOrgTitle.Location = new System.Drawing.Point(474, 54);
+            this.checkBoxOrgTitle.Location = new System.Drawing.Point(474, 71);
             this.checkBoxOrgTitle.Name = "checkBoxOrgTitle";
             this.checkBoxOrgTitle.Size = new System.Drawing.Size(67, 20);
             this.checkBoxOrgTitle.TabIndex = 2;
@@ -912,7 +917,7 @@
             // textBoxOrgTitle
             // 
             this.textBoxOrgTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxOrgTitle.Location = new System.Drawing.Point(233, 50);
+            this.textBoxOrgTitle.Location = new System.Drawing.Point(233, 67);
             this.textBoxOrgTitle.Name = "textBoxOrgTitle";
             this.textBoxOrgTitle.Size = new System.Drawing.Size(235, 22);
             this.textBoxOrgTitle.TabIndex = 1;
@@ -922,7 +927,7 @@
             // 
             this.labelOrgTitle.AutoSize = true;
             this.labelOrgTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelOrgTitle.Location = new System.Drawing.Point(16, 53);
+            this.labelOrgTitle.Location = new System.Drawing.Point(16, 70);
             this.labelOrgTitle.Name = "labelOrgTitle";
             this.labelOrgTitle.Size = new System.Drawing.Size(176, 16);
             this.labelOrgTitle.TabIndex = 0;
@@ -930,6 +935,7 @@
             // 
             // tabPageSettings
             // 
+            this.tabPageSettings.Controls.Add(this.groupBoxExtended);
             this.tabPageSettings.Controls.Add(this.buttonUnload);
             this.tabPageSettings.Controls.Add(this.textBoxUnload);
             this.tabPageSettings.Controls.Add(this.labelUnload);
@@ -949,14 +955,56 @@
             this.tabPageSettings.Location = new System.Drawing.Point(4, 25);
             this.tabPageSettings.Name = "tabPageSettings";
             this.tabPageSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSettings.Size = new System.Drawing.Size(558, 376);
+            this.tabPageSettings.Size = new System.Drawing.Size(558, 410);
             this.tabPageSettings.TabIndex = 0;
             this.tabPageSettings.Text = "Параметры";
             this.tabPageSettings.UseVisualStyleBackColor = true;
             // 
+            // groupBoxExtended
+            // 
+            this.groupBoxExtended.Controls.Add(this.textBoxOwner);
+            this.groupBoxExtended.Controls.Add(this.labelOwner);
+            this.groupBoxExtended.Controls.Add(this.checkBoxOwner);
+            this.groupBoxExtended.Location = new System.Drawing.Point(24, 289);
+            this.groupBoxExtended.Name = "groupBoxExtended";
+            this.groupBoxExtended.Size = new System.Drawing.Size(512, 80);
+            this.groupBoxExtended.TabIndex = 28;
+            this.groupBoxExtended.TabStop = false;
+            this.groupBoxExtended.Text = "Дополнительно";
+            // 
+            // textBoxOwner
+            // 
+            this.textBoxOwner.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxOwner.Location = new System.Drawing.Point(133, 21);
+            this.textBoxOwner.Name = "textBoxOwner";
+            this.textBoxOwner.Size = new System.Drawing.Size(372, 22);
+            this.textBoxOwner.TabIndex = 3;
+            this.textBoxOwner.TextChanged += new System.EventHandler(this.textBoxOwner_TextChanged);
+            // 
+            // labelOwner
+            // 
+            this.labelOwner.AutoSize = true;
+            this.labelOwner.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelOwner.Location = new System.Drawing.Point(13, 24);
+            this.labelOwner.Name = "labelOwner";
+            this.labelOwner.Size = new System.Drawing.Size(94, 16);
+            this.labelOwner.TabIndex = 2;
+            this.labelOwner.Text = "Владелец СИ";
+            // 
+            // checkBoxOwner
+            // 
+            this.checkBoxOwner.AutoSize = true;
+            this.checkBoxOwner.Location = new System.Drawing.Point(16, 47);
+            this.checkBoxOwner.Name = "checkBoxOwner";
+            this.checkBoxOwner.Size = new System.Drawing.Size(173, 20);
+            this.checkBoxOwner.TabIndex = 0;
+            this.checkBoxOwner.Text = "Только этот владелец";
+            this.checkBoxOwner.UseVisualStyleBackColor = true;
+            this.checkBoxOwner.CheckedChanged += new System.EventHandler(this.checkBoxOwner_CheckedChanged);
+            // 
             // buttonUnload
             // 
-            this.buttonUnload.Location = new System.Drawing.Point(461, 318);
+            this.buttonUnload.Location = new System.Drawing.Point(461, 375);
             this.buttonUnload.Name = "buttonUnload";
             this.buttonUnload.Size = new System.Drawing.Size(75, 23);
             this.buttonUnload.TabIndex = 27;
@@ -967,7 +1015,7 @@
             // textBoxUnload
             // 
             this.textBoxUnload.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxUnload.Location = new System.Drawing.Point(187, 318);
+            this.textBoxUnload.Location = new System.Drawing.Point(187, 375);
             this.textBoxUnload.Name = "textBoxUnload";
             this.textBoxUnload.ReadOnly = true;
             this.textBoxUnload.Size = new System.Drawing.Size(268, 22);
@@ -977,7 +1025,7 @@
             // labelUnload
             // 
             this.labelUnload.AutoSize = true;
-            this.labelUnload.Location = new System.Drawing.Point(23, 321);
+            this.labelUnload.Location = new System.Drawing.Point(23, 378);
             this.labelUnload.Name = "labelUnload";
             this.labelUnload.Size = new System.Drawing.Size(150, 16);
             this.labelUnload.TabIndex = 25;
@@ -987,7 +1035,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(591, 542);
+            this.ClientSize = new System.Drawing.Size(591, 588);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelTitle);
             this.Controls.Add(this.buttonStart);
@@ -1010,6 +1058,8 @@
             this.tabPageFilter.PerformLayout();
             this.tabPageSettings.ResumeLayout(false);
             this.tabPageSettings.PerformLayout();
+            this.groupBoxExtended.ResumeLayout(false);
+            this.groupBoxExtended.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1087,6 +1137,10 @@
         private System.Windows.Forms.Button buttonUnload;
         private System.Windows.Forms.TextBox textBoxUnload;
         private System.Windows.Forms.Label labelUnload;
+        private System.Windows.Forms.GroupBox groupBoxExtended;
+        private System.Windows.Forms.CheckBox checkBoxOwner;
+        private System.Windows.Forms.TextBox textBoxOwner;
+        private System.Windows.Forms.Label labelOwner;
     }
 }
 
