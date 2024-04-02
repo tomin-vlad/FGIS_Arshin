@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -6,20 +9,25 @@ using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OfficeOpenXml;
 
 namespace FGIS_Arshin
 {
     public partial class Form : System.Windows.Forms.Form
     {
         int start, pass = 0;
+        string xslxFilePath = "";
 
         public Form()
         {
             InitializeComponent();
+            notifyIcon.Text = Text;
         }
 
         private void Form_Load(object sender, EventArgs e)
         {
+            notifyIcon.Visible = true;
+
             dateTimePickerYear.Value = Properties.Settings.Default.year != "" ? DateTime.Parse(Properties.Settings.Default.year) : DateTime.Today;
             dateTimePickerYear.MaxDate = DateTime.Today;
             dateTimePickerYear.Checked = false;
@@ -87,9 +95,6 @@ namespace FGIS_Arshin
             checkBoxField10.Checked = Properties.Settings.Default.field10 ? true : false;
             checkBoxField11.Checked = Properties.Settings.Default.field11 ? true : false;
 
-            textBoxOwner.Text = Properties.Settings.Default.owner_val != "" ? Properties.Settings.Default.owner_val : "";
-            checkBoxOwner.Checked = Properties.Settings.Default.owner_on ? true : false;
-
             textBoxUnload.Text = Properties.Settings.Default.unload != "" && Directory.Exists(Properties.Settings.Default.unload) ? Properties.Settings.Default.unload : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             checkValidate();
@@ -134,102 +139,120 @@ namespace FGIS_Arshin
 
                 labelPercent.Visible = true;
 
-                int itemsCount = 0, totalIteration = 0;
-                string csvFilePath = textBoxUnload.Text + "\\data_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".csv";
+                int totalIteration = 0;
+                int fileCount = Directory.GetFiles(textBoxUnload.Text, "*_" + DateTime.Now.ToString("yyyy-MM-dd") + ".xlsx").Length + 1;
+                xslxFilePath = textBoxUnload.Text + "\\" + fileCount + "_" + DateTime.Now.ToString("yyyy-MM-dd") + ".xlsx";
 
-                using (StreamWriter writer = new StreamWriter(csvFilePath, false, Encoding.UTF8))
+                DataTable dataTable = new DataTable();
+
+                for (int i = 1; i <= 11; i++)
                 {
-                    for (int i = 0; i < iterations; i++)
+                    CheckBox checkBox = (CheckBox)this.Controls.Find("checkBoxField" + i, true)[0];
+                    if (checkBox != null && checkBox.Checked)
                     {
-                        request = postRequest();
-                        Thread.Sleep((int)numericUpDownPause.Value);
+                        dataTable.Columns.Add(checkBox.Text, typeof(string));
+                    }
 
-                        if (request != null)
+                }
+
+                for (int i = 0; i < iterations; i++)
+                {
+                    request = postRequest();
+                    Thread.Sleep((int)numericUpDownPause.Value);
+
+                    if (request != null)
+                    {
+                        obj = JToken.Parse(request);
+                        var items = obj["result"]["items"];
+
+                        foreach (var item in items)
                         {
-                            obj = JToken.Parse(request);
-                            var items = obj["result"]["items"];
-
-                            foreach (var item in items)
+                            if (pass != 0)
                             {
-                                if (pass != 0)
-                                {
-                                    pass--;
-                                    continue;
-                                }
-
-                                string result = (item["vri_id"] != null && checkBoxField1.Checked ? EscapeField(item["vri_id"].ToString()) : "") + ";" +
-                                    (item["org_title"] != null && checkBoxField2.Checked ? EscapeField(item["org_title"].ToString()) : "") + ";" +
-                                    (item["mit_number"] != null && checkBoxField3.Checked ? EscapeField(item["mit_number"].ToString()) : "") + ";" +
-                                    (item["mit_title"] != null && checkBoxField4.Checked ? EscapeField(item["mit_title"].ToString()) : "") + ";" +
-                                    (item["mit_notation"] != null && checkBoxField5.Checked ? EscapeField(item["mit_notation"].ToString()) : "") + ";" +
-                                    (item["mi_modification"] != null && checkBoxField6.Checked ? EscapeField(item["mi_modification"].ToString()) : "") + ";" +
-                                    (item["mi_number"] != null && checkBoxField7.Checked ? EscapeField(item["mi_number"].ToString()) : "") + ";" +
-                                    (item["verification_date"] != null && checkBoxField8.Checked ? EscapeField(item["verification_date"].ToString()) : "") + ";" +
-                                    (item["valid_date"] != null && checkBoxField9.Checked ? EscapeField(item["valid_date"].ToString()) : "") + ";" +
-                                    (item["result_docnum"] != null && checkBoxField10.Checked ? EscapeField(item["result_docnum"].ToString()) : "") + ";" +
-                                    (item["applicability"] != null && checkBoxField11.Checked ? EscapeField(item["applicability"].ToString()) : "");
-
-                                if (checkBoxOwner.Checked && textBoxOwner.Text != "" && item["vri_id"] != null)
-                                {
-                                    var request2 = getExtended(item["vri_id"].ToString());
-                                    Thread.Sleep((int)numericUpDownPause.Value);
-
-                                    if (request2 != null)
-                                    {
-                                        var obj2 = JToken.Parse(request2);
-                                        if (obj2["result"]["vriInfo"]["miOwner"] != null)
-                                        {
-                                            if (obj2["result"]["vriInfo"]["miOwner"].ToString().IndexOf(textBoxOwner.Text, StringComparison.OrdinalIgnoreCase) != -1)
-                                            {
-                                                writer.WriteLine($"{result}");
-                                                itemsCount++;
-                                            }
-                                            
-                                        }
-                                    }
-                                } else
-                                {
-                                    writer.WriteLine($"{result}");
-                                }
-
-                                progressBarProcess.Value = (int)Math.Round((double)totalIteration / count * 100);
-                                labelPercent.Text = progressBarProcess.Value.ToString() + "%";
-                                Application.DoEvents();
-                                totalIteration++;
+                                pass--;
+                                continue;
                             }
+
+                            string[] result = {
+                                item["vri_id"] != null && checkBoxField1.Checked ? item["vri_id"].ToString() : null,
+                                item["org_title"] != null && checkBoxField2.Checked ? item["org_title"].ToString() : null,
+                                item["mit_number"] != null && checkBoxField3.Checked ? item["mit_number"].ToString() : null,
+                                item["mit_title"] != null && checkBoxField4.Checked ? item["mit_title"].ToString() : null,
+                                item["mit_notation"] != null && checkBoxField5.Checked ? item["mit_notation"].ToString() : null,
+                                item["mi_modification"] != null && checkBoxField6.Checked ? item["mi_modification"].ToString() : null,
+                                item["mi_number"] != null && checkBoxField7.Checked ? item["mi_number"].ToString() : null,
+                                item["verification_date"] != null && checkBoxField8.Checked ? item["verification_date"].ToString() : null,
+                                item["valid_date"] != null && checkBoxField9.Checked ? item["valid_date"].ToString() : null,
+                                item["result_docnum"] != null && checkBoxField10.Checked ? item["result_docnum"].ToString() : null,
+                                item["applicability"] != null && checkBoxField11.Checked ? (item["applicability"].ToString()) == "True" ? "Да" : "Нет" : null
+                            };
+
+                            AddRow(dataTable, result);
+
+                            progressBarProcess.Value = (int)Math.Round((double)totalIteration / count * 100);
+                            labelPercent.Text = progressBarProcess.Value.ToString() + "%";
+                            Application.DoEvents();
+                            totalIteration++;
                         }
-                        else
-                        {
-                            break;
-                        }
-                        
-                        if (start + (int)numericUpDownRows.Value <= 99999)
-                        {
-                            start = start + (int)numericUpDownRows.Value;
-                        } else
-                        {
-                            pass = (start + (int)numericUpDownRows.Value) - 99999;
-                            start = 99999;
-                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    if (start + (int)numericUpDownRows.Value <= 99999)
+                    {
+                        start = start + (int)numericUpDownRows.Value;
+                    }
+                    else
+                    {
+                        pass = (start + (int)numericUpDownRows.Value) - 99999;
+                        start = 99999;
                     }
                 }
 
-                string msg = (checkBoxOwner.Checked && textBoxOwner.Text != "") ? 
-                    "Было обработано " + totalIteration-- + " записей. Из них успешно выгружено в CSV файл \"" + csvFilePath + "\" " + itemsCount + " записей." :
-                    "Было обаботано и успешно выгружено в CSV файл \"" + csvFilePath + "\" " + totalIteration + " записей.";
+                WriteToExcel(xslxFilePath, dataTable);
 
-                MessageBox.Show(
-                    msg,
-                    Text,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                string msg = "Обаботано и выгружено " + totalIteration + " записей в файл " + xslxFilePath;
+                notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+                notifyIcon.BalloonTipText = msg;
+                notifyIcon.BalloonTipTitle = Text;
+                notifyIcon.ShowBalloonTip(3);
 
                 start = pass = progressBarProcess.Value = 0;
                 labelPercent.Visible = false;
             }
 
             buttonStart.Enabled = true;
+        }
+
+        static void AddRow(DataTable dataTable, params object[] values)
+        {
+            dataTable.Rows.Add(values);
+        }
+
+        static void WriteToExcel(string filePath, DataTable dataTable)
+        {
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+                var dataRange = worksheet.Cells.LoadFromDataTable(dataTable, true);
+                var headerRange = worksheet.Cells[dataRange.Start.Row, dataRange.Start.Column, dataRange.Start.Row, dataRange.End.Column];
+                headerRange.Style.Font.Bold = true;
+                headerRange.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                headerRange.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+
+                var allCellsRange = worksheet.Cells[dataRange.Start.Row, dataRange.Start.Column, dataRange.End.Row, dataRange.End.Column];
+                allCellsRange.Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                allCellsRange.Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                allCellsRange.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                allCellsRange.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+
+                worksheet.View.FreezePanes(2, 1);
+                worksheet.Cells.AutoFitColumns();
+
+                package.SaveAs(new FileInfo(filePath));
+            }
         }
 
         public string postRequest()
@@ -314,64 +337,6 @@ namespace FGIS_Arshin
             return null;
         }
 
-        public string getExtended(string vri_id)
-        {
-            var apiUrl = new Uri("https://fgis.gost.ru/fundmetrology/eapi/vri/" + vri_id);
-            int tries = (int)numericUpDownTries.Value;
-            string err_msg = "";
-
-            while (tries-- != 0)
-            {
-                try
-                {
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-                    WebRequest req = WebRequest.Create(apiUrl);
-                    WebResponse resp = req.GetResponse();
-                    Stream stream = resp.GetResponseStream();
-                    StreamReader sr = new StreamReader(stream);
-                    string result = sr.ReadToEnd();
-                    sr.Close();
-
-                    if (IsValidJson(result))
-                    {
-                        var obj = JToken.Parse(result);
-                        if (obj["result"]["miInfo"] != null && obj["result"]["vriInfo"] != null)
-                        {
-                            return result;
-                        }
-                        else if (obj["status"] != null && obj["message"] != null)
-                        {
-                            MessageBox.Show(obj["message"].ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return null;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Неизвестная ошибка в ответе.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return null;
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Не удается разобрать JSON-ответ.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return null;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (ex.Message.Contains("(500)"))
-                    {
-                        Thread.Sleep((int)numericUpDownPause.Value);
-                        err_msg = ex.Message;
-                        continue;
-                    }
-                    MessageBox.Show(ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return null;
-                }
-            }
-            MessageBox.Show(err_msg, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return null;
-        }
-
         private static bool IsValidJson(string strInput)
         {
             if (string.IsNullOrWhiteSpace(strInput)) { return false; }
@@ -399,18 +364,6 @@ namespace FGIS_Arshin
             }
         }
 
-        static string EscapeField(string field)
-        {
-            if (field.Contains(";") || field.Contains("\""))
-            {
-                return $"\"{field.Replace("\"", "\"\"")}\"";
-            }
-            else
-            {
-                return field;
-            }
-        }
-
         static string SearchConstruct(string field, bool exact)
         {
             return !exact ? "*" + field.Replace(" ", "?") + "*" : field.Replace(" ", "?");
@@ -430,12 +383,24 @@ namespace FGIS_Arshin
                 numericUpDownTries.Value < numericUpDownTries.Minimum | numericUpDownTries.Value > numericUpDownTries.Maximum |
                 (!checkBoxField1.Checked && !checkBoxField2.Checked && !checkBoxField3.Checked && !checkBoxField4.Checked &&
                 !checkBoxField5.Checked && !checkBoxField6.Checked && !checkBoxField7.Checked && !checkBoxField8.Checked &&
-                !checkBoxField9.Checked && !checkBoxField10.Checked && !checkBoxField11.Checked) | (textBoxOwner.Text == "" && checkBoxOwner.Checked))
+                !checkBoxField9.Checked && !checkBoxField10.Checked && !checkBoxField11.Checked))
             {
                 buttonStart.Enabled = false;
             } else
             {
                 buttonStart.Enabled = true;
+            }
+        }
+
+        private void notifyIcon_BalloonTipClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(xslxFilePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при открытии файла: " + ex.Message);
             }
         }
 
@@ -766,26 +731,21 @@ namespace FGIS_Arshin
             }
         }
 
-        private void textBoxOwner_TextChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.owner_val = textBoxOwner.Text;
-            Properties.Settings.Default.Save();
-
-            checkValidate();
-        }
-
-        private void checkBoxOwner_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.owner_on = checkBoxOwner.Checked ? true : false;
-            Properties.Settings.Default.Save();
-
-            checkValidate();
-        }
-
         private void textBoxUnload_TextChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.unload = textBoxUnload.Text;
             Properties.Settings.Default.Save();
+        }
+
+        private void buttonHelp_Click(object sender, EventArgs e)
+        {
+            if (File.Exists("Help.pdf"))
+            {
+                Process.Start(@"Help.pdf");
+            } else
+            {
+                MessageBox.Show("Файл справки недоступен или поврежден.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

@@ -490,29 +490,5 @@ namespace FGIS_Arshin.Properties {
                 this["unload"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string owner_val {
-            get {
-                return ((string)(this["owner_val"]));
-            }
-            set {
-                this["owner_val"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool owner_on {
-            get {
-                return ((bool)(this["owner_on"]));
-            }
-            set {
-                this["owner_on"] = value;
-            }
-        }
     }
 }
