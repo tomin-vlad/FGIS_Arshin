@@ -30,34 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form));
-            this.labelTitle = new System.Windows.Forms.Label();
-            this.comboBoxSortBy = new System.Windows.Forms.ComboBox();
-            this.labelSort = new System.Windows.Forms.Label();
-            this.checkBoxSorted = new System.Windows.Forms.CheckBox();
-            this.numericUpDownRows = new System.Windows.Forms.NumericUpDown();
-            this.labelRows = new System.Windows.Forms.Label();
-            this.labelMs = new System.Windows.Forms.Label();
-            this.numericUpDownPause = new System.Windows.Forms.NumericUpDown();
-            this.labelPause = new System.Windows.Forms.Label();
-            this.labelItems = new System.Windows.Forms.Label();
-            this.buttonStart = new System.Windows.Forms.Button();
-            this.progressBarProcess = new System.Windows.Forms.ProgressBar();
-            this.labelPercent = new System.Windows.Forms.Label();
-            this.groupBoxFields = new System.Windows.Forms.GroupBox();
-            this.checkBoxField11 = new System.Windows.Forms.CheckBox();
-            this.checkBoxField10 = new System.Windows.Forms.CheckBox();
-            this.checkBoxField9 = new System.Windows.Forms.CheckBox();
-            this.checkBoxField8 = new System.Windows.Forms.CheckBox();
-            this.checkBoxField7 = new System.Windows.Forms.CheckBox();
-            this.checkBoxField6 = new System.Windows.Forms.CheckBox();
-            this.checkBoxField5 = new System.Windows.Forms.CheckBox();
-            this.checkBoxField4 = new System.Windows.Forms.CheckBox();
-            this.checkBoxField3 = new System.Windows.Forms.CheckBox();
-            this.checkBoxField2 = new System.Windows.Forms.CheckBox();
-            this.checkBoxField1 = new System.Windows.Forms.CheckBox();
-            this.labelTries = new System.Windows.Forms.Label();
-            this.numericUpDownTries = new System.Windows.Forms.NumericUpDown();
-            this.labelRepeat = new System.Windows.Forms.Label();
+            this.buttonHelp = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageFilter = new System.Windows.Forms.TabPage();
             this.comboBoxApplicability = new System.Windows.Forms.ComboBox();
@@ -100,398 +73,65 @@
             this.buttonUnload = new System.Windows.Forms.Button();
             this.textBoxUnload = new System.Windows.Forms.TextBox();
             this.labelUnload = new System.Windows.Forms.Label();
-            this.buttonHelp = new System.Windows.Forms.Button();
+            this.labelTries = new System.Windows.Forms.Label();
+            this.numericUpDownTries = new System.Windows.Forms.NumericUpDown();
+            this.labelRepeat = new System.Windows.Forms.Label();
+            this.groupBoxFields = new System.Windows.Forms.GroupBox();
+            this.checkBoxField11 = new System.Windows.Forms.CheckBox();
+            this.checkBoxField10 = new System.Windows.Forms.CheckBox();
+            this.checkBoxField9 = new System.Windows.Forms.CheckBox();
+            this.checkBoxField8 = new System.Windows.Forms.CheckBox();
+            this.checkBoxField7 = new System.Windows.Forms.CheckBox();
+            this.checkBoxField6 = new System.Windows.Forms.CheckBox();
+            this.checkBoxField5 = new System.Windows.Forms.CheckBox();
+            this.checkBoxField4 = new System.Windows.Forms.CheckBox();
+            this.checkBoxField3 = new System.Windows.Forms.CheckBox();
+            this.checkBoxField2 = new System.Windows.Forms.CheckBox();
+            this.checkBoxField1 = new System.Windows.Forms.CheckBox();
+            this.labelItems = new System.Windows.Forms.Label();
+            this.labelSort = new System.Windows.Forms.Label();
+            this.labelMs = new System.Windows.Forms.Label();
+            this.comboBoxSortBy = new System.Windows.Forms.ComboBox();
+            this.numericUpDownPause = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxSorted = new System.Windows.Forms.CheckBox();
+            this.labelPause = new System.Windows.Forms.Label();
+            this.labelRows = new System.Windows.Forms.Label();
+            this.numericUpDownRows = new System.Windows.Forms.NumericUpDown();
+            this.labelTitle = new System.Windows.Forms.Label();
+            this.buttonStart = new System.Windows.Forms.Button();
+            this.progressBarProcess = new System.Windows.Forms.ProgressBar();
+            this.labelPercent = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPause)).BeginInit();
-            this.groupBoxFields.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTries)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPageFilter.SuspendLayout();
             this.tabPageSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTries)).BeginInit();
+            this.groupBoxFields.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPause)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).BeginInit();
             this.SuspendLayout();
             // 
-            // labelTitle
+            // buttonHelp
             // 
-            this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelTitle.Location = new System.Drawing.Point(199, 14);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(192, 19);
-            this.labelTitle.TabIndex = 0;
-            this.labelTitle.Text = "Клиент ФГИС \"Аршин\"";
-            // 
-            // comboBoxSortBy
-            // 
-            this.comboBoxSortBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxSortBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBoxSortBy.FormattingEnabled = true;
-            this.comboBoxSortBy.Items.AddRange(new object[] {
-            "Идентиф. версии элемента",
-            "Наименование поверителя",
-            "Рег. номер типа СИ",
-            "Наименование типа СИ",
-            "Обозначение типа СИ",
-            "Модификация СИ",
-            "Зав./сер. номер/бук.-циф. обознач.",
-            "Дата поверки",
-            "Действительна до",
-            "Номер свидет./извещ./выписки",
-            "Пригодность"});
-            this.comboBoxSortBy.Location = new System.Drawing.Point(157, 19);
-            this.comboBoxSortBy.Name = "comboBoxSortBy";
-            this.comboBoxSortBy.Size = new System.Drawing.Size(379, 24);
-            this.comboBoxSortBy.TabIndex = 10;
-            this.comboBoxSortBy.SelectedIndexChanged += new System.EventHandler(this.comboBoxSortBy_SelectedIndexChanged);
-            // 
-            // labelSort
-            // 
-            this.labelSort.AutoSize = true;
-            this.labelSort.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelSort.Location = new System.Drawing.Point(23, 26);
-            this.labelSort.Name = "labelSort";
-            this.labelSort.Size = new System.Drawing.Size(86, 16);
-            this.labelSort.TabIndex = 9;
-            this.labelSort.Text = "Сортировка";
-            // 
-            // checkBoxSorted
-            // 
-            this.checkBoxSorted.AutoSize = true;
-            this.checkBoxSorted.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBoxSorted.Location = new System.Drawing.Point(157, 49);
-            this.checkBoxSorted.Name = "checkBoxSorted";
-            this.checkBoxSorted.Size = new System.Drawing.Size(159, 20);
-            this.checkBoxSorted.TabIndex = 11;
-            this.checkBoxSorted.Text = "В обратном порядке";
-            this.checkBoxSorted.UseVisualStyleBackColor = true;
-            this.checkBoxSorted.CheckedChanged += new System.EventHandler(this.checkBoxSorted_CheckedChanged);
-            // 
-            // numericUpDownRows
-            // 
-            this.numericUpDownRows.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDownRows.Location = new System.Drawing.Point(157, 77);
-            this.numericUpDownRows.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownRows.Name = "numericUpDownRows";
-            this.numericUpDownRows.Size = new System.Drawing.Size(59, 22);
-            this.numericUpDownRows.TabIndex = 13;
-            this.numericUpDownRows.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.numericUpDownRows.ValueChanged += new System.EventHandler(this.numericUpDownRows_ValueChanged);
-            // 
-            // labelRows
-            // 
-            this.labelRows.AutoSize = true;
-            this.labelRows.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelRows.Location = new System.Drawing.Point(23, 79);
-            this.labelRows.Name = "labelRows";
-            this.labelRows.Size = new System.Drawing.Size(111, 16);
-            this.labelRows.TabIndex = 12;
-            this.labelRows.Text = "Кол-во в ответе";
-            // 
-            // labelMs
-            // 
-            this.labelMs.AutoSize = true;
-            this.labelMs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelMs.Location = new System.Drawing.Point(481, 79);
-            this.labelMs.Name = "labelMs";
-            this.labelMs.Size = new System.Drawing.Size(23, 16);
-            this.labelMs.TabIndex = 17;
-            this.labelMs.Text = "мс";
-            // 
-            // numericUpDownPause
-            // 
-            this.numericUpDownPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDownPause.Location = new System.Drawing.Point(419, 77);
-            this.numericUpDownPause.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
-            this.numericUpDownPause.Minimum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.numericUpDownPause.Name = "numericUpDownPause";
-            this.numericUpDownPause.Size = new System.Drawing.Size(59, 22);
-            this.numericUpDownPause.TabIndex = 16;
-            this.numericUpDownPause.Value = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.numericUpDownPause.ValueChanged += new System.EventHandler(this.numericUpDownPause_ValueChanged);
-            // 
-            // labelPause
-            // 
-            this.labelPause.AutoSize = true;
-            this.labelPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelPause.Location = new System.Drawing.Point(301, 79);
-            this.labelPause.Name = "labelPause";
-            this.labelPause.Size = new System.Drawing.Size(107, 16);
-            this.labelPause.TabIndex = 15;
-            this.labelPause.Text = "Пауза запроса";
-            // 
-            // labelItems
-            // 
-            this.labelItems.AutoSize = true;
-            this.labelItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelItems.Location = new System.Drawing.Point(219, 79);
-            this.labelItems.Name = "labelItems";
-            this.labelItems.Size = new System.Drawing.Size(62, 16);
-            this.labelItems.TabIndex = 14;
-            this.labelItems.Text = "записей";
-            // 
-            // buttonStart
-            // 
-            this.buttonStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonStart.Location = new System.Drawing.Point(12, 494);
-            this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(566, 39);
-            this.buttonStart.TabIndex = 18;
-            this.buttonStart.Text = "Запустить";
-            this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
-            // 
-            // progressBarProcess
-            // 
-            this.progressBarProcess.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.progressBarProcess.Location = new System.Drawing.Point(12, 539);
-            this.progressBarProcess.MarqueeAnimationSpeed = 0;
-            this.progressBarProcess.Name = "progressBarProcess";
-            this.progressBarProcess.Size = new System.Drawing.Size(566, 23);
-            this.progressBarProcess.TabIndex = 19;
-            // 
-            // labelPercent
-            // 
-            this.labelPercent.AutoSize = true;
-            this.labelPercent.Location = new System.Drawing.Point(285, 566);
-            this.labelPercent.Name = "labelPercent";
-            this.labelPercent.Size = new System.Drawing.Size(21, 13);
-            this.labelPercent.TabIndex = 20;
-            this.labelPercent.Text = "0%";
-            this.labelPercent.Visible = false;
-            // 
-            // groupBoxFields
-            // 
-            this.groupBoxFields.Controls.Add(this.checkBoxField11);
-            this.groupBoxFields.Controls.Add(this.checkBoxField10);
-            this.groupBoxFields.Controls.Add(this.checkBoxField9);
-            this.groupBoxFields.Controls.Add(this.checkBoxField8);
-            this.groupBoxFields.Controls.Add(this.checkBoxField7);
-            this.groupBoxFields.Controls.Add(this.checkBoxField6);
-            this.groupBoxFields.Controls.Add(this.checkBoxField5);
-            this.groupBoxFields.Controls.Add(this.checkBoxField4);
-            this.groupBoxFields.Controls.Add(this.checkBoxField3);
-            this.groupBoxFields.Controls.Add(this.checkBoxField2);
-            this.groupBoxFields.Controls.Add(this.checkBoxField1);
-            this.groupBoxFields.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBoxFields.Location = new System.Drawing.Point(24, 152);
-            this.groupBoxFields.Name = "groupBoxFields";
-            this.groupBoxFields.Size = new System.Drawing.Size(512, 182);
-            this.groupBoxFields.TabIndex = 21;
-            this.groupBoxFields.TabStop = false;
-            this.groupBoxFields.Text = "Выгружаемые поля";
-            // 
-            // checkBoxField11
-            // 
-            this.checkBoxField11.AutoSize = true;
-            this.checkBoxField11.Checked = true;
-            this.checkBoxField11.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxField11.Location = new System.Drawing.Point(16, 134);
-            this.checkBoxField11.Name = "checkBoxField11";
-            this.checkBoxField11.Size = new System.Drawing.Size(111, 20);
-            this.checkBoxField11.TabIndex = 10;
-            this.checkBoxField11.Text = "Пригодность";
-            this.checkBoxField11.UseVisualStyleBackColor = true;
-            this.checkBoxField11.CheckedChanged += new System.EventHandler(this.checkBoxField11_CheckedChanged);
-            // 
-            // checkBoxField10
-            // 
-            this.checkBoxField10.AutoSize = true;
-            this.checkBoxField10.Checked = true;
-            this.checkBoxField10.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxField10.Location = new System.Drawing.Point(277, 115);
-            this.checkBoxField10.Name = "checkBoxField10";
-            this.checkBoxField10.Size = new System.Drawing.Size(228, 20);
-            this.checkBoxField10.TabIndex = 9;
-            this.checkBoxField10.Text = "Номер свидет./извещ./выписки";
-            this.checkBoxField10.UseVisualStyleBackColor = true;
-            this.checkBoxField10.CheckedChanged += new System.EventHandler(this.checkBoxField10_CheckedChanged);
-            // 
-            // checkBoxField9
-            // 
-            this.checkBoxField9.AutoSize = true;
-            this.checkBoxField9.Checked = true;
-            this.checkBoxField9.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxField9.Location = new System.Drawing.Point(16, 115);
-            this.checkBoxField9.Name = "checkBoxField9";
-            this.checkBoxField9.Size = new System.Drawing.Size(146, 20);
-            this.checkBoxField9.TabIndex = 8;
-            this.checkBoxField9.Text = "Действительна до";
-            this.checkBoxField9.UseVisualStyleBackColor = true;
-            this.checkBoxField9.CheckedChanged += new System.EventHandler(this.checkBoxField9_CheckedChanged);
-            // 
-            // checkBoxField8
-            // 
-            this.checkBoxField8.AutoSize = true;
-            this.checkBoxField8.Checked = true;
-            this.checkBoxField8.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxField8.Location = new System.Drawing.Point(277, 96);
-            this.checkBoxField8.Name = "checkBoxField8";
-            this.checkBoxField8.Size = new System.Drawing.Size(116, 20);
-            this.checkBoxField8.TabIndex = 7;
-            this.checkBoxField8.Text = "Дата поверки";
-            this.checkBoxField8.UseVisualStyleBackColor = true;
-            this.checkBoxField8.CheckedChanged += new System.EventHandler(this.checkBoxField8_CheckedChanged);
-            // 
-            // checkBoxField7
-            // 
-            this.checkBoxField7.AutoSize = true;
-            this.checkBoxField7.Checked = true;
-            this.checkBoxField7.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxField7.Location = new System.Drawing.Point(16, 96);
-            this.checkBoxField7.Name = "checkBoxField7";
-            this.checkBoxField7.Size = new System.Drawing.Size(254, 20);
-            this.checkBoxField7.TabIndex = 6;
-            this.checkBoxField7.Text = "Зав./сер. номер/бук.-циф. обознач.";
-            this.checkBoxField7.UseVisualStyleBackColor = true;
-            this.checkBoxField7.CheckedChanged += new System.EventHandler(this.checkBoxField7_CheckedChanged);
-            // 
-            // checkBoxField6
-            // 
-            this.checkBoxField6.AutoSize = true;
-            this.checkBoxField6.Checked = true;
-            this.checkBoxField6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxField6.Location = new System.Drawing.Point(277, 77);
-            this.checkBoxField6.Name = "checkBoxField6";
-            this.checkBoxField6.Size = new System.Drawing.Size(140, 20);
-            this.checkBoxField6.TabIndex = 5;
-            this.checkBoxField6.Text = "Модификация СИ";
-            this.checkBoxField6.UseVisualStyleBackColor = true;
-            this.checkBoxField6.CheckedChanged += new System.EventHandler(this.checkBoxField6_CheckedChanged);
-            // 
-            // checkBoxField5
-            // 
-            this.checkBoxField5.AutoSize = true;
-            this.checkBoxField5.Checked = true;
-            this.checkBoxField5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxField5.Location = new System.Drawing.Point(16, 77);
-            this.checkBoxField5.Name = "checkBoxField5";
-            this.checkBoxField5.Size = new System.Drawing.Size(172, 20);
-            this.checkBoxField5.TabIndex = 4;
-            this.checkBoxField5.Text = "Обозначение типа СИ";
-            this.checkBoxField5.UseVisualStyleBackColor = true;
-            this.checkBoxField5.CheckedChanged += new System.EventHandler(this.checkBoxField5_CheckedChanged);
-            // 
-            // checkBoxField4
-            // 
-            this.checkBoxField4.AutoSize = true;
-            this.checkBoxField4.Checked = true;
-            this.checkBoxField4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxField4.Location = new System.Drawing.Point(277, 58);
-            this.checkBoxField4.Name = "checkBoxField4";
-            this.checkBoxField4.Size = new System.Drawing.Size(181, 20);
-            this.checkBoxField4.TabIndex = 3;
-            this.checkBoxField4.Text = "Наименование типа СИ";
-            this.checkBoxField4.UseVisualStyleBackColor = true;
-            this.checkBoxField4.CheckedChanged += new System.EventHandler(this.checkBoxField4_CheckedChanged);
-            // 
-            // checkBoxField3
-            // 
-            this.checkBoxField3.AutoSize = true;
-            this.checkBoxField3.Checked = true;
-            this.checkBoxField3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxField3.Location = new System.Drawing.Point(16, 58);
-            this.checkBoxField3.Name = "checkBoxField3";
-            this.checkBoxField3.Size = new System.Drawing.Size(152, 20);
-            this.checkBoxField3.TabIndex = 2;
-            this.checkBoxField3.Text = "Рег. номер типа СИ";
-            this.checkBoxField3.UseVisualStyleBackColor = true;
-            this.checkBoxField3.CheckedChanged += new System.EventHandler(this.checkBoxField3_CheckedChanged);
-            // 
-            // checkBoxField2
-            // 
-            this.checkBoxField2.AutoSize = true;
-            this.checkBoxField2.Checked = true;
-            this.checkBoxField2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxField2.Location = new System.Drawing.Point(277, 39);
-            this.checkBoxField2.Name = "checkBoxField2";
-            this.checkBoxField2.Size = new System.Drawing.Size(206, 20);
-            this.checkBoxField2.TabIndex = 1;
-            this.checkBoxField2.Text = "Наименование поверителя";
-            this.checkBoxField2.UseVisualStyleBackColor = true;
-            this.checkBoxField2.CheckedChanged += new System.EventHandler(this.checkBoxField2_CheckedChanged);
-            // 
-            // checkBoxField1
-            // 
-            this.checkBoxField1.AutoSize = true;
-            this.checkBoxField1.Checked = true;
-            this.checkBoxField1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxField1.Location = new System.Drawing.Point(16, 39);
-            this.checkBoxField1.Name = "checkBoxField1";
-            this.checkBoxField1.Size = new System.Drawing.Size(206, 20);
-            this.checkBoxField1.TabIndex = 0;
-            this.checkBoxField1.Text = "Идентиф. версии элемента";
-            this.checkBoxField1.UseVisualStyleBackColor = true;
-            this.checkBoxField1.CheckedChanged += new System.EventHandler(this.checkBoxField1_CheckedChanged);
-            // 
-            // labelTries
-            // 
-            this.labelTries.AutoSize = true;
-            this.labelTries.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelTries.Location = new System.Drawing.Point(221, 111);
-            this.labelTries.Name = "labelTries";
-            this.labelTries.Size = new System.Drawing.Size(125, 16);
-            this.labelTries.TabIndex = 24;
-            this.labelTries.Text = "раз(а) при ошибке";
-            // 
-            // numericUpDownTries
-            // 
-            this.numericUpDownTries.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDownTries.Location = new System.Drawing.Point(157, 109);
-            this.numericUpDownTries.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownTries.Name = "numericUpDownTries";
-            this.numericUpDownTries.Size = new System.Drawing.Size(59, 22);
-            this.numericUpDownTries.TabIndex = 23;
-            this.numericUpDownTries.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numericUpDownTries.ValueChanged += new System.EventHandler(this.numericUpDownTries_ValueChanged);
-            // 
-            // labelRepeat
-            // 
-            this.labelRepeat.AutoSize = true;
-            this.labelRepeat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelRepeat.Location = new System.Drawing.Point(23, 111);
-            this.labelRepeat.Name = "labelRepeat";
-            this.labelRepeat.Size = new System.Drawing.Size(127, 16);
-            this.labelRepeat.TabIndex = 22;
-            this.labelRepeat.Text = "Повторять запрос";
+            this.buttonHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonHelp.Location = new System.Drawing.Point(478, 16);
+            this.buttonHelp.Name = "buttonHelp";
+            this.buttonHelp.Size = new System.Drawing.Size(96, 28);
+            this.buttonHelp.TabIndex = 32;
+            this.buttonHelp.Text = "Справка";
+            this.buttonHelp.UseVisualStyleBackColor = true;
+            this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPageFilter);
             this.tabControl1.Controls.Add(this.tabPageSettings);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tabControl1.Location = new System.Drawing.Point(12, 36);
+            this.tabControl1.Location = new System.Drawing.Point(12, 34);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(566, 439);
-            this.tabControl1.TabIndex = 25;
+            this.tabControl1.TabIndex = 31;
             // 
             // tabPageFilter
             // 
@@ -986,16 +626,376 @@
             this.labelUnload.TabIndex = 25;
             this.labelUnload.Text = "Директория выгрузки";
             // 
-            // buttonHelp
+            // labelTries
             // 
-            this.buttonHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonHelp.Location = new System.Drawing.Point(478, 18);
-            this.buttonHelp.Name = "buttonHelp";
-            this.buttonHelp.Size = new System.Drawing.Size(96, 28);
-            this.buttonHelp.TabIndex = 26;
-            this.buttonHelp.Text = "Справка";
-            this.buttonHelp.UseVisualStyleBackColor = true;
-            this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
+            this.labelTries.AutoSize = true;
+            this.labelTries.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelTries.Location = new System.Drawing.Point(221, 111);
+            this.labelTries.Name = "labelTries";
+            this.labelTries.Size = new System.Drawing.Size(125, 16);
+            this.labelTries.TabIndex = 24;
+            this.labelTries.Text = "раз(а) при ошибке";
+            // 
+            // numericUpDownTries
+            // 
+            this.numericUpDownTries.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numericUpDownTries.Location = new System.Drawing.Point(157, 109);
+            this.numericUpDownTries.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownTries.Name = "numericUpDownTries";
+            this.numericUpDownTries.Size = new System.Drawing.Size(59, 22);
+            this.numericUpDownTries.TabIndex = 23;
+            this.numericUpDownTries.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownTries.ValueChanged += new System.EventHandler(this.numericUpDownTries_ValueChanged);
+            // 
+            // labelRepeat
+            // 
+            this.labelRepeat.AutoSize = true;
+            this.labelRepeat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelRepeat.Location = new System.Drawing.Point(23, 111);
+            this.labelRepeat.Name = "labelRepeat";
+            this.labelRepeat.Size = new System.Drawing.Size(127, 16);
+            this.labelRepeat.TabIndex = 22;
+            this.labelRepeat.Text = "Повторять запрос";
+            // 
+            // groupBoxFields
+            // 
+            this.groupBoxFields.Controls.Add(this.checkBoxField11);
+            this.groupBoxFields.Controls.Add(this.checkBoxField10);
+            this.groupBoxFields.Controls.Add(this.checkBoxField9);
+            this.groupBoxFields.Controls.Add(this.checkBoxField8);
+            this.groupBoxFields.Controls.Add(this.checkBoxField7);
+            this.groupBoxFields.Controls.Add(this.checkBoxField6);
+            this.groupBoxFields.Controls.Add(this.checkBoxField5);
+            this.groupBoxFields.Controls.Add(this.checkBoxField4);
+            this.groupBoxFields.Controls.Add(this.checkBoxField3);
+            this.groupBoxFields.Controls.Add(this.checkBoxField2);
+            this.groupBoxFields.Controls.Add(this.checkBoxField1);
+            this.groupBoxFields.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBoxFields.Location = new System.Drawing.Point(24, 152);
+            this.groupBoxFields.Name = "groupBoxFields";
+            this.groupBoxFields.Size = new System.Drawing.Size(512, 182);
+            this.groupBoxFields.TabIndex = 21;
+            this.groupBoxFields.TabStop = false;
+            this.groupBoxFields.Text = "Выгружаемые поля";
+            // 
+            // checkBoxField11
+            // 
+            this.checkBoxField11.AutoSize = true;
+            this.checkBoxField11.Checked = true;
+            this.checkBoxField11.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxField11.Location = new System.Drawing.Point(16, 134);
+            this.checkBoxField11.Name = "checkBoxField11";
+            this.checkBoxField11.Size = new System.Drawing.Size(111, 20);
+            this.checkBoxField11.TabIndex = 10;
+            this.checkBoxField11.Text = "Пригодность";
+            this.checkBoxField11.UseVisualStyleBackColor = true;
+            this.checkBoxField11.CheckedChanged += new System.EventHandler(this.checkBoxField11_CheckedChanged);
+            // 
+            // checkBoxField10
+            // 
+            this.checkBoxField10.AutoSize = true;
+            this.checkBoxField10.Checked = true;
+            this.checkBoxField10.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxField10.Location = new System.Drawing.Point(277, 115);
+            this.checkBoxField10.Name = "checkBoxField10";
+            this.checkBoxField10.Size = new System.Drawing.Size(228, 20);
+            this.checkBoxField10.TabIndex = 9;
+            this.checkBoxField10.Text = "Номер свидет./извещ./выписки";
+            this.checkBoxField10.UseVisualStyleBackColor = true;
+            this.checkBoxField10.CheckedChanged += new System.EventHandler(this.checkBoxField10_CheckedChanged);
+            // 
+            // checkBoxField9
+            // 
+            this.checkBoxField9.AutoSize = true;
+            this.checkBoxField9.Checked = true;
+            this.checkBoxField9.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxField9.Location = new System.Drawing.Point(16, 115);
+            this.checkBoxField9.Name = "checkBoxField9";
+            this.checkBoxField9.Size = new System.Drawing.Size(146, 20);
+            this.checkBoxField9.TabIndex = 8;
+            this.checkBoxField9.Text = "Действительна до";
+            this.checkBoxField9.UseVisualStyleBackColor = true;
+            this.checkBoxField9.CheckedChanged += new System.EventHandler(this.checkBoxField9_CheckedChanged);
+            // 
+            // checkBoxField8
+            // 
+            this.checkBoxField8.AutoSize = true;
+            this.checkBoxField8.Checked = true;
+            this.checkBoxField8.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxField8.Location = new System.Drawing.Point(277, 96);
+            this.checkBoxField8.Name = "checkBoxField8";
+            this.checkBoxField8.Size = new System.Drawing.Size(116, 20);
+            this.checkBoxField8.TabIndex = 7;
+            this.checkBoxField8.Text = "Дата поверки";
+            this.checkBoxField8.UseVisualStyleBackColor = true;
+            this.checkBoxField8.CheckedChanged += new System.EventHandler(this.checkBoxField8_CheckedChanged);
+            // 
+            // checkBoxField7
+            // 
+            this.checkBoxField7.AutoSize = true;
+            this.checkBoxField7.Checked = true;
+            this.checkBoxField7.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxField7.Location = new System.Drawing.Point(16, 96);
+            this.checkBoxField7.Name = "checkBoxField7";
+            this.checkBoxField7.Size = new System.Drawing.Size(254, 20);
+            this.checkBoxField7.TabIndex = 6;
+            this.checkBoxField7.Text = "Зав./сер. номер/бук.-циф. обознач.";
+            this.checkBoxField7.UseVisualStyleBackColor = true;
+            this.checkBoxField7.CheckedChanged += new System.EventHandler(this.checkBoxField7_CheckedChanged);
+            // 
+            // checkBoxField6
+            // 
+            this.checkBoxField6.AutoSize = true;
+            this.checkBoxField6.Checked = true;
+            this.checkBoxField6.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxField6.Location = new System.Drawing.Point(277, 77);
+            this.checkBoxField6.Name = "checkBoxField6";
+            this.checkBoxField6.Size = new System.Drawing.Size(140, 20);
+            this.checkBoxField6.TabIndex = 5;
+            this.checkBoxField6.Text = "Модификация СИ";
+            this.checkBoxField6.UseVisualStyleBackColor = true;
+            this.checkBoxField6.CheckedChanged += new System.EventHandler(this.checkBoxField6_CheckedChanged);
+            // 
+            // checkBoxField5
+            // 
+            this.checkBoxField5.AutoSize = true;
+            this.checkBoxField5.Checked = true;
+            this.checkBoxField5.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxField5.Location = new System.Drawing.Point(16, 77);
+            this.checkBoxField5.Name = "checkBoxField5";
+            this.checkBoxField5.Size = new System.Drawing.Size(172, 20);
+            this.checkBoxField5.TabIndex = 4;
+            this.checkBoxField5.Text = "Обозначение типа СИ";
+            this.checkBoxField5.UseVisualStyleBackColor = true;
+            this.checkBoxField5.CheckedChanged += new System.EventHandler(this.checkBoxField5_CheckedChanged);
+            // 
+            // checkBoxField4
+            // 
+            this.checkBoxField4.AutoSize = true;
+            this.checkBoxField4.Checked = true;
+            this.checkBoxField4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxField4.Location = new System.Drawing.Point(277, 58);
+            this.checkBoxField4.Name = "checkBoxField4";
+            this.checkBoxField4.Size = new System.Drawing.Size(181, 20);
+            this.checkBoxField4.TabIndex = 3;
+            this.checkBoxField4.Text = "Наименование типа СИ";
+            this.checkBoxField4.UseVisualStyleBackColor = true;
+            this.checkBoxField4.CheckedChanged += new System.EventHandler(this.checkBoxField4_CheckedChanged);
+            // 
+            // checkBoxField3
+            // 
+            this.checkBoxField3.AutoSize = true;
+            this.checkBoxField3.Checked = true;
+            this.checkBoxField3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxField3.Location = new System.Drawing.Point(16, 58);
+            this.checkBoxField3.Name = "checkBoxField3";
+            this.checkBoxField3.Size = new System.Drawing.Size(152, 20);
+            this.checkBoxField3.TabIndex = 2;
+            this.checkBoxField3.Text = "Рег. номер типа СИ";
+            this.checkBoxField3.UseVisualStyleBackColor = true;
+            this.checkBoxField3.CheckedChanged += new System.EventHandler(this.checkBoxField3_CheckedChanged);
+            // 
+            // checkBoxField2
+            // 
+            this.checkBoxField2.AutoSize = true;
+            this.checkBoxField2.Checked = true;
+            this.checkBoxField2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxField2.Location = new System.Drawing.Point(277, 39);
+            this.checkBoxField2.Name = "checkBoxField2";
+            this.checkBoxField2.Size = new System.Drawing.Size(206, 20);
+            this.checkBoxField2.TabIndex = 1;
+            this.checkBoxField2.Text = "Наименование поверителя";
+            this.checkBoxField2.UseVisualStyleBackColor = true;
+            this.checkBoxField2.CheckedChanged += new System.EventHandler(this.checkBoxField2_CheckedChanged);
+            // 
+            // checkBoxField1
+            // 
+            this.checkBoxField1.AutoSize = true;
+            this.checkBoxField1.Checked = true;
+            this.checkBoxField1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxField1.Location = new System.Drawing.Point(16, 39);
+            this.checkBoxField1.Name = "checkBoxField1";
+            this.checkBoxField1.Size = new System.Drawing.Size(206, 20);
+            this.checkBoxField1.TabIndex = 0;
+            this.checkBoxField1.Text = "Идентиф. версии элемента";
+            this.checkBoxField1.UseVisualStyleBackColor = true;
+            this.checkBoxField1.CheckedChanged += new System.EventHandler(this.checkBoxField1_CheckedChanged);
+            // 
+            // labelItems
+            // 
+            this.labelItems.AutoSize = true;
+            this.labelItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelItems.Location = new System.Drawing.Point(219, 79);
+            this.labelItems.Name = "labelItems";
+            this.labelItems.Size = new System.Drawing.Size(62, 16);
+            this.labelItems.TabIndex = 14;
+            this.labelItems.Text = "записей";
+            // 
+            // labelSort
+            // 
+            this.labelSort.AutoSize = true;
+            this.labelSort.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelSort.Location = new System.Drawing.Point(23, 26);
+            this.labelSort.Name = "labelSort";
+            this.labelSort.Size = new System.Drawing.Size(86, 16);
+            this.labelSort.TabIndex = 9;
+            this.labelSort.Text = "Сортировка";
+            // 
+            // labelMs
+            // 
+            this.labelMs.AutoSize = true;
+            this.labelMs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelMs.Location = new System.Drawing.Point(481, 79);
+            this.labelMs.Name = "labelMs";
+            this.labelMs.Size = new System.Drawing.Size(23, 16);
+            this.labelMs.TabIndex = 17;
+            this.labelMs.Text = "мс";
+            // 
+            // comboBoxSortBy
+            // 
+            this.comboBoxSortBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSortBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBoxSortBy.FormattingEnabled = true;
+            this.comboBoxSortBy.Items.AddRange(new object[] {
+            "Идентиф. версии элемента",
+            "Наименование поверителя",
+            "Рег. номер типа СИ",
+            "Наименование типа СИ",
+            "Обозначение типа СИ",
+            "Модификация СИ",
+            "Зав./сер. номер/бук.-циф. обознач.",
+            "Дата поверки",
+            "Действительна до",
+            "Номер свидет./извещ./выписки",
+            "Пригодность"});
+            this.comboBoxSortBy.Location = new System.Drawing.Point(157, 19);
+            this.comboBoxSortBy.Name = "comboBoxSortBy";
+            this.comboBoxSortBy.Size = new System.Drawing.Size(379, 24);
+            this.comboBoxSortBy.TabIndex = 10;
+            this.comboBoxSortBy.SelectedIndexChanged += new System.EventHandler(this.comboBoxSortBy_SelectedIndexChanged);
+            // 
+            // numericUpDownPause
+            // 
+            this.numericUpDownPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numericUpDownPause.Location = new System.Drawing.Point(419, 77);
+            this.numericUpDownPause.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.numericUpDownPause.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDownPause.Name = "numericUpDownPause";
+            this.numericUpDownPause.Size = new System.Drawing.Size(59, 22);
+            this.numericUpDownPause.TabIndex = 16;
+            this.numericUpDownPause.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDownPause.ValueChanged += new System.EventHandler(this.numericUpDownPause_ValueChanged);
+            // 
+            // checkBoxSorted
+            // 
+            this.checkBoxSorted.AutoSize = true;
+            this.checkBoxSorted.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBoxSorted.Location = new System.Drawing.Point(157, 49);
+            this.checkBoxSorted.Name = "checkBoxSorted";
+            this.checkBoxSorted.Size = new System.Drawing.Size(159, 20);
+            this.checkBoxSorted.TabIndex = 11;
+            this.checkBoxSorted.Text = "В обратном порядке";
+            this.checkBoxSorted.UseVisualStyleBackColor = true;
+            this.checkBoxSorted.CheckedChanged += new System.EventHandler(this.checkBoxSorted_CheckedChanged);
+            // 
+            // labelPause
+            // 
+            this.labelPause.AutoSize = true;
+            this.labelPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelPause.Location = new System.Drawing.Point(301, 79);
+            this.labelPause.Name = "labelPause";
+            this.labelPause.Size = new System.Drawing.Size(107, 16);
+            this.labelPause.TabIndex = 15;
+            this.labelPause.Text = "Пауза запроса";
+            // 
+            // labelRows
+            // 
+            this.labelRows.AutoSize = true;
+            this.labelRows.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelRows.Location = new System.Drawing.Point(23, 79);
+            this.labelRows.Name = "labelRows";
+            this.labelRows.Size = new System.Drawing.Size(111, 16);
+            this.labelRows.TabIndex = 12;
+            this.labelRows.Text = "Кол-во в ответе";
+            // 
+            // numericUpDownRows
+            // 
+            this.numericUpDownRows.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numericUpDownRows.Location = new System.Drawing.Point(157, 77);
+            this.numericUpDownRows.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownRows.Name = "numericUpDownRows";
+            this.numericUpDownRows.Size = new System.Drawing.Size(59, 22);
+            this.numericUpDownRows.TabIndex = 13;
+            this.numericUpDownRows.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericUpDownRows.ValueChanged += new System.EventHandler(this.numericUpDownRows_ValueChanged);
+            // 
+            // labelTitle
+            // 
+            this.labelTitle.AutoSize = true;
+            this.labelTitle.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelTitle.Location = new System.Drawing.Point(199, 12);
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Size = new System.Drawing.Size(192, 19);
+            this.labelTitle.TabIndex = 27;
+            this.labelTitle.Text = "Клиент ФГИС \"Аршин\"";
+            // 
+            // buttonStart
+            // 
+            this.buttonStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonStart.Location = new System.Drawing.Point(12, 492);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(566, 39);
+            this.buttonStart.TabIndex = 28;
+            this.buttonStart.Text = "Запустить";
+            this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            // 
+            // progressBarProcess
+            // 
+            this.progressBarProcess.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.progressBarProcess.Location = new System.Drawing.Point(12, 537);
+            this.progressBarProcess.MarqueeAnimationSpeed = 0;
+            this.progressBarProcess.Name = "progressBarProcess";
+            this.progressBarProcess.Size = new System.Drawing.Size(566, 23);
+            this.progressBarProcess.TabIndex = 29;
+            // 
+            // labelPercent
+            // 
+            this.labelPercent.AutoSize = true;
+            this.labelPercent.Location = new System.Drawing.Point(285, 564);
+            this.labelPercent.Name = "labelPercent";
+            this.labelPercent.Size = new System.Drawing.Size(21, 13);
+            this.labelPercent.TabIndex = 30;
+            this.labelPercent.Text = "0%";
+            this.labelPercent.Visible = false;
             // 
             // notifyIcon
             // 
@@ -1022,16 +1022,16 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Клиент ФГИС \"Аршин\"";
             this.Load += new System.EventHandler(this.Form_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPause)).EndInit();
-            this.groupBoxFields.ResumeLayout(false);
-            this.groupBoxFields.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTries)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPageFilter.ResumeLayout(false);
             this.tabPageFilter.PerformLayout();
             this.tabPageSettings.ResumeLayout(false);
             this.tabPageSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTries)).EndInit();
+            this.groupBoxFields.ResumeLayout(false);
+            this.groupBoxFields.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPause)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1039,38 +1039,36 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelTitle;
-        private System.Windows.Forms.ComboBox comboBoxSortBy;
-        private System.Windows.Forms.Label labelSort;
-        private System.Windows.Forms.CheckBox checkBoxSorted;
-        private System.Windows.Forms.NumericUpDown numericUpDownRows;
-        private System.Windows.Forms.Label labelRows;
-        private System.Windows.Forms.Label labelMs;
-        private System.Windows.Forms.NumericUpDown numericUpDownPause;
-        private System.Windows.Forms.Label labelPause;
-        private System.Windows.Forms.Label labelItems;
-        private System.Windows.Forms.Button buttonStart;
-        private System.Windows.Forms.ProgressBar progressBarProcess;
-        private System.Windows.Forms.Label labelPercent;
-        private System.Windows.Forms.GroupBox groupBoxFields;
-        private System.Windows.Forms.CheckBox checkBoxField3;
-        private System.Windows.Forms.CheckBox checkBoxField2;
-        private System.Windows.Forms.CheckBox checkBoxField1;
-        private System.Windows.Forms.CheckBox checkBoxField6;
-        private System.Windows.Forms.CheckBox checkBoxField5;
-        private System.Windows.Forms.CheckBox checkBoxField4;
-        private System.Windows.Forms.CheckBox checkBoxField10;
-        private System.Windows.Forms.CheckBox checkBoxField9;
-        private System.Windows.Forms.CheckBox checkBoxField8;
-        private System.Windows.Forms.CheckBox checkBoxField7;
-        private System.Windows.Forms.CheckBox checkBoxField11;
-        private System.Windows.Forms.Label labelTries;
-        private System.Windows.Forms.NumericUpDown numericUpDownTries;
-        private System.Windows.Forms.Label labelRepeat;
+        private System.Windows.Forms.Button buttonHelp;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPageSettings;
         private System.Windows.Forms.TabPage tabPageFilter;
-        private System.Windows.Forms.Label labelOrgTitle;
+        private System.Windows.Forms.ComboBox comboBoxApplicability;
+        private System.Windows.Forms.Label labelApplicability;
+        private System.Windows.Forms.CheckBox checkBoxSticker;
+        private System.Windows.Forms.TextBox textBoxSticker;
+        private System.Windows.Forms.Label labelSticker;
+        private System.Windows.Forms.CheckBox checkBoxDocnum;
+        private System.Windows.Forms.TextBox textBoxDocnum;
+        private System.Windows.Forms.Label labelDocnum;
+        private System.Windows.Forms.Label labelValid;
+        private System.Windows.Forms.DateTimePicker dateTimePickerValidStart;
+        private System.Windows.Forms.Label labelValidTo;
+        private System.Windows.Forms.DateTimePicker dateTimePickerValidEnd;
+        private System.Windows.Forms.Label labelYear;
+        private System.Windows.Forms.DateTimePicker dateTimePickerYear;
+        private System.Windows.Forms.Label labelVerification;
+        private System.Windows.Forms.DateTimePicker dateTimePickerVerificationStart;
+        private System.Windows.Forms.Label labelVerificationTo;
+        private System.Windows.Forms.DateTimePicker dateTimePickerVerificationEnd;
+        private System.Windows.Forms.CheckBox checkBoxMiNumber;
+        private System.Windows.Forms.TextBox textBoxMiNumber;
+        private System.Windows.Forms.Label labelMiNumber;
+        private System.Windows.Forms.CheckBox checkBoxMiModification;
+        private System.Windows.Forms.TextBox textBoxMiModification;
+        private System.Windows.Forms.Label labelMiModification;
+        private System.Windows.Forms.CheckBox checkBoxMitNotation;
+        private System.Windows.Forms.TextBox textBoxMitNotation;
+        private System.Windows.Forms.Label labelMitNotation;
         private System.Windows.Forms.CheckBox checkBoxMitTitle;
         private System.Windows.Forms.TextBox textBoxMitTitle;
         private System.Windows.Forms.Label labelMitTitle;
@@ -1079,37 +1077,39 @@
         private System.Windows.Forms.Label labelMitNumber;
         private System.Windows.Forms.CheckBox checkBoxOrgTitle;
         private System.Windows.Forms.TextBox textBoxOrgTitle;
-        private System.Windows.Forms.CheckBox checkBoxMitNotation;
-        private System.Windows.Forms.TextBox textBoxMitNotation;
-        private System.Windows.Forms.Label labelMitNotation;
-        private System.Windows.Forms.CheckBox checkBoxMiModification;
-        private System.Windows.Forms.TextBox textBoxMiModification;
-        private System.Windows.Forms.Label labelMiModification;
-        private System.Windows.Forms.CheckBox checkBoxMiNumber;
-        private System.Windows.Forms.TextBox textBoxMiNumber;
-        private System.Windows.Forms.Label labelMiNumber;
-        private System.Windows.Forms.Label labelVerification;
-        private System.Windows.Forms.DateTimePicker dateTimePickerVerificationStart;
-        private System.Windows.Forms.Label labelVerificationTo;
-        private System.Windows.Forms.DateTimePicker dateTimePickerVerificationEnd;
-        private System.Windows.Forms.Label labelYear;
-        private System.Windows.Forms.DateTimePicker dateTimePickerYear;
-        private System.Windows.Forms.Label labelValid;
-        private System.Windows.Forms.DateTimePicker dateTimePickerValidStart;
-        private System.Windows.Forms.Label labelValidTo;
-        private System.Windows.Forms.DateTimePicker dateTimePickerValidEnd;
-        private System.Windows.Forms.CheckBox checkBoxSticker;
-        private System.Windows.Forms.TextBox textBoxSticker;
-        private System.Windows.Forms.Label labelSticker;
-        private System.Windows.Forms.CheckBox checkBoxDocnum;
-        private System.Windows.Forms.TextBox textBoxDocnum;
-        private System.Windows.Forms.Label labelDocnum;
-        private System.Windows.Forms.Label labelApplicability;
-        private System.Windows.Forms.ComboBox comboBoxApplicability;
+        private System.Windows.Forms.Label labelOrgTitle;
+        private System.Windows.Forms.TabPage tabPageSettings;
         private System.Windows.Forms.Button buttonUnload;
         private System.Windows.Forms.TextBox textBoxUnload;
         private System.Windows.Forms.Label labelUnload;
-        private System.Windows.Forms.Button buttonHelp;
+        private System.Windows.Forms.Label labelTries;
+        private System.Windows.Forms.NumericUpDown numericUpDownTries;
+        private System.Windows.Forms.Label labelRepeat;
+        private System.Windows.Forms.GroupBox groupBoxFields;
+        private System.Windows.Forms.CheckBox checkBoxField11;
+        private System.Windows.Forms.CheckBox checkBoxField10;
+        private System.Windows.Forms.CheckBox checkBoxField9;
+        private System.Windows.Forms.CheckBox checkBoxField8;
+        private System.Windows.Forms.CheckBox checkBoxField7;
+        private System.Windows.Forms.CheckBox checkBoxField6;
+        private System.Windows.Forms.CheckBox checkBoxField5;
+        private System.Windows.Forms.CheckBox checkBoxField4;
+        private System.Windows.Forms.CheckBox checkBoxField3;
+        private System.Windows.Forms.CheckBox checkBoxField2;
+        private System.Windows.Forms.CheckBox checkBoxField1;
+        private System.Windows.Forms.Label labelItems;
+        private System.Windows.Forms.Label labelSort;
+        private System.Windows.Forms.Label labelMs;
+        private System.Windows.Forms.ComboBox comboBoxSortBy;
+        private System.Windows.Forms.NumericUpDown numericUpDownPause;
+        private System.Windows.Forms.CheckBox checkBoxSorted;
+        private System.Windows.Forms.Label labelPause;
+        private System.Windows.Forms.Label labelRows;
+        private System.Windows.Forms.NumericUpDown numericUpDownRows;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Button buttonStart;
+        private System.Windows.Forms.ProgressBar progressBarProcess;
+        private System.Windows.Forms.Label labelPercent;
         private System.Windows.Forms.NotifyIcon notifyIcon;
     }
 }

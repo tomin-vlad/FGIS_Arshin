@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("FGIS_Arshin")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("ООО Газпром трансгаз Самара")]
 [assembly: AssemblyProduct("FGIS_Arshin")]
-[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyCopyright("Copyright ©  2024 Томин Владислав, Деркач Ульяна")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("97e500e2-8988-4254-a3b8-08feb8e2434c")]
+[assembly: Guid("729817cb-29de-49b9-8453-534a93a982dd")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //

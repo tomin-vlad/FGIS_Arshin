@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Net;
+using System.Linq;
+using System.Net.Sockets;
+using Org.BouncyCastle.Crypto.Tls;
+using Org.BouncyCastle.Security;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -73,7 +78,7 @@ namespace FGIS_Arshin
             checkBoxSticker.Checked = Properties.Settings.Default.sticker_on ? true : false;
 
             comboBoxApplicability.SelectedIndex = Properties.Settings.Default.applicability != 2 ? Properties.Settings.Default.applicability : 2;
-            
+
             comboBoxSortBy.SelectedIndex = Properties.Settings.Default.sortby != 0 ? Properties.Settings.Default.sortby : 0;
             checkBoxSorted.Checked = Properties.Settings.Default.sorted ? true : false;
 
@@ -124,7 +129,8 @@ namespace FGIS_Arshin
                     if (dialogResult == DialogResult.Yes)
                     {
                         count = 99999 + (int)numericUpDownRows.Maximum;
-                    } else
+                    }
+                    else
                     {
                         start = progressBarProcess.Value = 0;
                         labelPercent.Visible = false;
@@ -233,6 +239,8 @@ namespace FGIS_Arshin
 
         static void WriteToExcel(string filePath, DataTable dataTable)
         {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
             using (var package = new ExcelPackage())
             {
                 var worksheet = package.Workbook.Worksheets.Add("Sheet1");
@@ -257,15 +265,15 @@ namespace FGIS_Arshin
 
         public string postRequest()
         {
-            string search = 
-                (dateTimePickerYear.Checked ? "year=" + dateTimePickerYear.Value.ToString("yyyy") + "&" : "") + 
-                (textBoxOrgTitle.Text.Length > 0 ? "org_title=" + SearchConstruct(textBoxOrgTitle.Text, checkBoxOrgTitle.Checked) + "&" : "") +
+            string search =
+                (dateTimePickerYear.Checked ? "year=" + dateTimePickerYear.Value.ToString("yyyy") + "&" : "") +
+                (textBoxOrgTitle.Text.Length > 0 ? "org_title=" + Uri.EscapeDataString(SearchConstruct(textBoxOrgTitle.Text, checkBoxOrgTitle.Checked)) + "&" : "") +
                 (textBoxMitNumber.Text.Length > 0 ? "mit_number=" + SearchConstruct(textBoxMitNumber.Text, checkBoxMitNumber.Checked) + "&" : "") +
                 (textBoxMitTitle.Text.Length > 0 ? "mit_title=" + SearchConstruct(textBoxMitTitle.Text, checkBoxMitTitle.Checked) + "&" : "") +
                 (textBoxMitNotation.Text.Length > 0 ? "mit_notation=" + SearchConstruct(textBoxMitNotation.Text, checkBoxMitNotation.Checked) + "&" : "") +
                 (textBoxMiModification.Text.Length > 0 ? "mi_modification=" + SearchConstruct(textBoxMiModification.Text, checkBoxMiModification.Checked) + "&" : "") +
                 (textBoxMiNumber.Text.Length > 0 ? "mi_number=" + SearchConstruct(textBoxMiNumber.Text, checkBoxMiNumber.Checked) + "&" : "") +
-                (dateTimePickerVerificationStart.Checked ? "verification_date_start=" + dateTimePickerVerificationStart.Value.ToString("yyyy-MM-dd") + "&" : "") + 
+                (dateTimePickerVerificationStart.Checked ? "verification_date_start=" + dateTimePickerVerificationStart.Value.ToString("yyyy-MM-dd") + "&" : "") +
                 (dateTimePickerVerificationEnd.Checked ? "verification_date_end=" + dateTimePickerVerificationEnd.Value.ToString("yyyy-MM-dd") + "&" : "") +
                 (dateTimePickerValidStart.Checked ? "valid_date_start=" + dateTimePickerValidStart.Value.ToString("yyyy-MM-dd") + "&" : "") +
                 (dateTimePickerValidEnd.Checked ? "valid_date_end=" + dateTimePickerValidEnd.Value.ToString("yyyy-MM-dd") + "&" : "") +
@@ -276,70 +284,238 @@ namespace FGIS_Arshin
             string[] attr = { "vri_id", "org_title", "mit_number", "mit_title", "mit_notation", "mi_modification", "mi_number", "verification_date", "valid_date", "result_docnum", "applicability" };
             string sort = attr[comboBoxSortBy.SelectedIndex] += !checkBoxSorted.Checked ? "+asc" : "+desc";
 
-            var apiUrl = new Uri(
-                "https://fgis.gost.ru/fundmetrology/eapi/vri?" +
-                search +
-                "start=" + start + "&" +
-                "rows=" + (int)numericUpDownRows.Value + "&" +
-                "sort=" + sort
-            );
-            
+            string host = "fgis.gost.ru";
+            int port = 443;
+            string parameters = search + "start=" + start + "&" + "rows=" + (int)numericUpDownRows.Value + "&" + "sort=" + sort;
+            string path = "/fundmetrology/eapi/vri";
+            string requestUri = $"{path}?{parameters}";
+
+
             int tries = (int)numericUpDownTries.Value;
             string err_msg = "";
-            while (tries-- != 0) {
+            while (tries-- != 0)
+            {
                 try
                 {
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-                    WebRequest req = WebRequest.Create(apiUrl);
-                    WebResponse resp = req.GetResponse();
-                    Stream stream = resp.GetResponseStream();
-                    StreamReader sr = new StreamReader(stream);
-                    string result = sr.ReadToEnd();
-                    sr.Close();
+                    using (TcpClient client = new TcpClient(host, port))
+                    {
+                        SecureRandom secureRandom = new SecureRandom();
+                        TlsClientProtocol tlsClientProtocol = new TlsClientProtocol(client.GetStream(), secureRandom);
 
-                    if (IsValidJson(result))
-                    {
-                        var obj = JToken.Parse(result);
-                        if (obj["result"]["count"] != null && obj["result"]["items"] != null)
+                        TlsClient tlsClient = new MyTlsClient();
+
+                        tlsClientProtocol.Connect(tlsClient);
+
+                        using (Stream tlsStream = tlsClientProtocol.Stream)
                         {
-                            return result;
-                        }
-                        else if (obj["status"] != null && obj["message"] != null)
-                        {
-                            MessageBox.Show(obj["message"].ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return null;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Неизвестная ошибка в ответе.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return null;
+                            StreamWriter writer = new StreamWriter(tlsStream);
+                            writer.Write($"GET {requestUri} HTTP/1.1\r\n");
+                            writer.Write($"Host: {host}\r\n");
+                            writer.Write("Connection: close\r\n");
+                            writer.Write("\r\n");
+                            writer.Flush();
+
+                            using (StreamReader reader = new StreamReader(tlsStream))
+                            {
+                                string fullResponse = reader.ReadToEnd();
+                                string result = GetJsonBody(fullResponse);
+
+                                if (IsValidJson(result))
+                                {
+                                    var obj = JToken.Parse(result);
+                                    if (obj["result"]["count"] != null && obj["result"]["items"] != null)
+                                    {
+                                        return result;
+                                    }
+                                    else if (obj["status"] != null && obj["message"] != null)
+                                    {
+                                        MessageBox.Show(obj["message"].ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return null;
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Неизвестная ошибка в ответе.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return null;
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Не удается разобрать JSON-ответ.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return null;
+                                }
+                            }
+
+                            //if (IsValidJson(result))
+                            //{
+                            //    var obj = JToken.Parse(result);
+                            //    if (obj["result"]["count"] != null && obj["result"]["items"] != null)
+                            //    {
+                            //        return result;
+                            //    }
+                            //    else if (obj["status"] != null && obj["message"] != null)
+                            //    {
+                            //        MessageBox.Show(obj["message"].ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            //        return null;
+                            //    }
+                            //    else
+                            //    {
+                            //        MessageBox.Show("Неизвестная ошибка в ответе.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            //        return null;
+                            //    }
+                            //}
+                            //else
+                            //{
+                            //    MessageBox.Show("Не удается разобрать JSON-ответ.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            //    return null;
+                            //}
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show("Не удается разобрать JSON-ответ.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return null;
-                    }
+                }
+                catch (TlsFatalAlert alert)
+                {
+                    Console.WriteLine($"TLS Fatal Alert: {alert.AlertDescription}");
                 }
                 catch (Exception ex)
                 {
-                    if (ex.Message.Contains("(500)"))
-                    {
-                        Thread.Sleep((int)numericUpDownPause.Value);
-                        err_msg = ex.Message;
-                        continue;
-                    }
-                    MessageBox.Show(ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return null;
+                    Console.WriteLine("Ошибка: " + ex.Message);
                 }
             }
             MessageBox.Show(err_msg, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             return null;
+
+
+
+
+
+
+
+
+
+            //while (tries-- != 0)
+            //{
+            //    try
+            //    {
+            //        //ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls;
+            //        //WebRequest req = WebRequest.Create(apiUrl);
+            //        //WebResponse resp = req.GetResponse();
+            //        //Stream stream = resp.GetResponseStream();
+            //        //StreamReader sr = new StreamReader(stream);
+            //        //string result = sr.ReadToEnd();
+            //        //sr.Close();
+
+            //        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
+            //        ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => false;
+
+            //        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiUrl);
+            //        request.Method = "GET";
+            //        WebResponse response = request.GetResponse();
+            //        StreamReader reader = new StreamReader(response.GetResponseStream());
+            //        string result = reader.ReadToEnd();
+            //        response.Close();
+
+            //        if (IsValidJson(result))
+            //        {
+            //            var obj = JToken.Parse(result);
+            //            if (obj["result"]["count"] != null && obj["result"]["items"] != null)
+            //            {
+            //                return result;
+            //            }
+            //            else if (obj["status"] != null && obj["message"] != null)
+            //            {
+            //                MessageBox.Show(obj["message"].ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //                return null;
+            //            }
+            //            else
+            //            {
+            //                MessageBox.Show("Неизвестная ошибка в ответе.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //                return null;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Не удается разобрать JSON-ответ.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //            return null;
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        if (ex.Message.Contains("(500)"))
+            //        {
+            //            Thread.Sleep((int)numericUpDownPause.Value);
+            //            err_msg = ex.Message;
+            //            continue;
+            //        }
+            //        MessageBox.Show(ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        Console.WriteLine(ex.ToString());
+            //        return null;
+            //    }
+            //}
+            //MessageBox.Show(err_msg, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //return null;
+        }
+
+        private static string GetJsonBody(string fullResponse)
+        {
+            // Найти индекс пустой строки, которая отделяет заголовки от тела
+            int bodyStartIndex = fullResponse.IndexOf("\r\n\r\n");
+
+            if (bodyStartIndex == -1)
+            {
+                throw new InvalidOperationException("Не удалось найти разделитель заголовков и тела ответа.");
+            }
+
+            // Получаем тело ответа после заголовков
+            string body = fullResponse.Substring(bodyStartIndex + 4);
+
+            // Удаляем `chunked` кодирование, оставляя только JSON
+            return RemoveChunkedEncoding(body);
+        }
+
+        private static string RemoveChunkedEncoding(string chunkedBody)
+        {
+            using (StringReader reader = new StringReader(chunkedBody))
+            {
+                string result = "";
+                string line;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    // Пропустить строку, если это размер чанка
+                    if (int.TryParse(line, System.Globalization.NumberStyles.HexNumber, null, out _))
+                    {
+                        // Пропускаем размер чанка
+                        continue;
+                    }
+
+                    // Добавляем данные чанка в результат
+                    result += line;
+                }
+
+                return result;
+            }
+        }
+
+        public static bool IsNullOrWhiteSpace(string value)
+        {
+            if (value == null)
+            {
+                return true;
+            }
+
+            foreach (char c in value)
+            {
+                if (!char.IsWhiteSpace(c))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static bool IsValidJson(string strInput)
         {
-            if (string.IsNullOrWhiteSpace(strInput)) { return false; }
+            if (IsNullOrWhiteSpace(strInput)) { return false; }
             strInput = strInput.Trim();
             if ((strInput.StartsWith("{") && strInput.EndsWith("}")) ||
                 (strInput.StartsWith("[") && strInput.EndsWith("]")))
@@ -372,7 +548,7 @@ namespace FGIS_Arshin
         private void checkValidate()
         {
             if (dateTimePickerYear.Value < dateTimePickerYear.MinDate | dateTimePickerYear.Value > dateTimePickerYear.MaxDate |
-                dateTimePickerVerificationStart.Value < dateTimePickerVerificationStart.MinDate | 
+                dateTimePickerVerificationStart.Value < dateTimePickerVerificationStart.MinDate |
                 dateTimePickerVerificationStart.Value > dateTimePickerVerificationStart.MaxDate |
                 dateTimePickerVerificationEnd.Value < dateTimePickerVerificationEnd.MinDate |
                 dateTimePickerVerificationEnd.Value > dateTimePickerVerificationEnd.MaxDate |
@@ -386,7 +562,8 @@ namespace FGIS_Arshin
                 !checkBoxField9.Checked && !checkBoxField10.Checked && !checkBoxField11.Checked))
             {
                 buttonStart.Enabled = false;
-            } else
+            }
+            else
             {
                 buttonStart.Enabled = true;
             }
@@ -512,7 +689,8 @@ namespace FGIS_Arshin
             {
                 Properties.Settings.Default.verificationend = dateTimePickerVerificationEnd.Value.ToString("yyyy-MM-dd");
                 Properties.Settings.Default.Save();
-            } else
+            }
+            else
             {
                 MessageBox.Show("Конечная дата поверки должна быть не ранее " + dateTimePickerVerificationEnd.MinDate.ToString("yyyy") + "г. и не позднее " + dateTimePickerVerificationEnd.MaxDate.ToString("yyyy") + "г.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -526,7 +704,8 @@ namespace FGIS_Arshin
             {
                 Properties.Settings.Default.validstart = dateTimePickerValidStart.Value.ToString("yyyy-MM-dd");
                 Properties.Settings.Default.Save();
-            } else
+            }
+            else
             {
                 MessageBox.Show("Начальная дата пригодности должна быть не ранее " + dateTimePickerValidStart.MinDate.ToString("yyyy") + "г. и не позднее " + dateTimePickerValidStart.MaxDate.ToString("yyyy") + "г.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -540,10 +719,13 @@ namespace FGIS_Arshin
             {
                 Properties.Settings.Default.validend = dateTimePickerValidEnd.Value.ToString("yyyy-MM-dd");
                 Properties.Settings.Default.Save();
-            } else
+            }
+            else
             {
                 MessageBox.Show("Конечная дата пригодности должна быть не ранее " + dateTimePickerValidEnd.MinDate.ToString("yyyy") + "г. и не позднее " + dateTimePickerValidEnd.MaxDate.ToString("yyyy") + "г.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            checkValidate();
         }
 
         private void textBoxDocnum_TextChanged(object sender, EventArgs e)
@@ -594,7 +776,8 @@ namespace FGIS_Arshin
             {
                 Properties.Settings.Default.rows = (int)numericUpDownRows.Value;
                 Properties.Settings.Default.Save();
-            } else
+            }
+            else
             {
                 MessageBox.Show("Кол-во записей в ответе должно быть не менее " + numericUpDownRows.Minimum + "шт. и не более " + numericUpDownRows.Maximum + "шт.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -608,7 +791,8 @@ namespace FGIS_Arshin
             {
                 Properties.Settings.Default.pause = (int)numericUpDownPause.Value;
                 Properties.Settings.Default.Save();
-            } else
+            }
+            else
             {
                 MessageBox.Show("Пауза запроса должна быть не менее " + numericUpDownPause.Minimum + "мс. и не более " + numericUpDownPause.Maximum + "мс.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -622,7 +806,8 @@ namespace FGIS_Arshin
             {
                 Properties.Settings.Default.tries = (int)numericUpDownTries.Value;
                 Properties.Settings.Default.Save();
-            } else
+            }
+            else
             {
                 MessageBox.Show("Кол-во повторных запросов при ошибке должно быть не менее " + numericUpDownTries.Minimum + "шт. и не более " + numericUpDownTries.Maximum + "шт.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -742,10 +927,33 @@ namespace FGIS_Arshin
             if (File.Exists("Help.pdf"))
             {
                 Process.Start(@"Help.pdf");
-            } else
+            }
+            else
             {
                 MessageBox.Show("Файл справки недоступен или поврежден.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+    }
+
+    class MyTlsClient : DefaultTlsClient
+    {
+        public override TlsAuthentication GetAuthentication()
+        {
+            return new MyTlsAuthentication();
+        }
+    }
+
+    class MyTlsAuthentication : TlsAuthentication
+    {
+        public void NotifyServerCertificate(Certificate serverCertificate)
+        {
+            // Здесь можно добавить проверку сертификата сервера
+            Console.WriteLine("Сертификат сервера получен.");
+        }
+
+        public TlsCredentials GetClientCredentials(CertificateRequest certificateRequest)
+        {
+            return null;
         }
     }
 }
