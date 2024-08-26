@@ -6,15 +6,13 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net.Sockets;
-using Org.BouncyCastle.Crypto.Tls;
-using Org.BouncyCastle.Security;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
+using System.Net;
 
 namespace FGIS_Arshin
 {
@@ -284,11 +282,9 @@ namespace FGIS_Arshin
             string[] attr = { "vri_id", "org_title", "mit_number", "mit_title", "mit_notation", "mi_modification", "mi_number", "verification_date", "valid_date", "result_docnum", "applicability" };
             string sort = attr[comboBoxSortBy.SelectedIndex] += !checkBoxSorted.Checked ? "+asc" : "+desc";
 
-            string host = "fgis.gost.ru";
-            int port = 443;
+            string host = "https://fgis.gost.ru/fundmetrology/eapi/vri";
             string parameters = search + "start=" + start + "&" + "rows=" + (int)numericUpDownRows.Value + "&" + "sort=" + sort;
-            string path = "/fundmetrology/eapi/vri";
-            string requestUri = $"{path}?{parameters}";
+            string requestUri = $"{host}?{parameters}";
 
 
             int tries = (int)numericUpDownTries.Value;
@@ -297,202 +293,46 @@ namespace FGIS_Arshin
             {
                 try
                 {
-                    using (TcpClient client = new TcpClient(host, port))
+                    using (WebClient client = new WebClient())
                     {
-                        SecureRandom secureRandom = new SecureRandom();
-                        TlsClientProtocol tlsClientProtocol = new TlsClientProtocol(client.GetStream(), secureRandom);
+                        IWebProxy defaultProxy = WebRequest.GetSystemWebProxy();
+                        defaultProxy.Credentials = CredentialCache.DefaultCredentials;
+                        client.Proxy = defaultProxy;
+                        client.Encoding = Encoding.UTF8;
+                        string result = client.DownloadString(requestUri);
 
-                        TlsClient tlsClient = new MyTlsClient();
-
-                        tlsClientProtocol.Connect(tlsClient);
-
-                        using (Stream tlsStream = tlsClientProtocol.Stream)
+                        if (IsValidJson(result))
                         {
-                            StreamWriter writer = new StreamWriter(tlsStream);
-                            writer.Write($"GET {requestUri} HTTP/1.1\r\n");
-                            writer.Write($"Host: {host}\r\n");
-                            writer.Write("Connection: close\r\n");
-                            writer.Write("\r\n");
-                            writer.Flush();
-
-                            using (StreamReader reader = new StreamReader(tlsStream))
+                            var obj = JToken.Parse(result);
+                            if (obj["result"]["count"] != null && obj["result"]["items"] != null)
                             {
-                                string fullResponse = reader.ReadToEnd();
-                                string result = GetJsonBody(fullResponse);
-
-                                if (IsValidJson(result))
-                                {
-                                    var obj = JToken.Parse(result);
-                                    if (obj["result"]["count"] != null && obj["result"]["items"] != null)
-                                    {
-                                        return result;
-                                    }
-                                    else if (obj["status"] != null && obj["message"] != null)
-                                    {
-                                        MessageBox.Show(obj["message"].ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                        return null;
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("Неизвестная ошибка в ответе.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                        return null;
-                                    }
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Не удается разобрать JSON-ответ.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return null;
-                                }
+                                return result;
                             }
-
-                            //if (IsValidJson(result))
-                            //{
-                            //    var obj = JToken.Parse(result);
-                            //    if (obj["result"]["count"] != null && obj["result"]["items"] != null)
-                            //    {
-                            //        return result;
-                            //    }
-                            //    else if (obj["status"] != null && obj["message"] != null)
-                            //    {
-                            //        MessageBox.Show(obj["message"].ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            //        return null;
-                            //    }
-                            //    else
-                            //    {
-                            //        MessageBox.Show("Неизвестная ошибка в ответе.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            //        return null;
-                            //    }
-                            //}
-                            //else
-                            //{
-                            //    MessageBox.Show("Не удается разобрать JSON-ответ.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            //    return null;
-                            //}
+                            else if (obj["status"] != null && obj["message"] != null)
+                            {
+                                MessageBox.Show(obj["message"].ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return null;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Неизвестная ошибка в ответе.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return null;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Не удается разобрать JSON-ответ.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return null;
                         }
                     }
                 }
-                catch (TlsFatalAlert alert)
-                {
-                    Console.WriteLine($"TLS Fatal Alert: {alert.AlertDescription}");
-                }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Ошибка: " + ex.Message);
+                    Console.WriteLine("Ошибка при получении данных: " + ex.Message);
                 }
             }
             MessageBox.Show(err_msg, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             return null;
-
-
-
-
-
-
-
-
-
-            //while (tries-- != 0)
-            //{
-            //    try
-            //    {
-            //        //ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls;
-            //        //WebRequest req = WebRequest.Create(apiUrl);
-            //        //WebResponse resp = req.GetResponse();
-            //        //Stream stream = resp.GetResponseStream();
-            //        //StreamReader sr = new StreamReader(stream);
-            //        //string result = sr.ReadToEnd();
-            //        //sr.Close();
-
-            //        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
-            //        ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => false;
-
-            //        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiUrl);
-            //        request.Method = "GET";
-            //        WebResponse response = request.GetResponse();
-            //        StreamReader reader = new StreamReader(response.GetResponseStream());
-            //        string result = reader.ReadToEnd();
-            //        response.Close();
-
-            //        if (IsValidJson(result))
-            //        {
-            //            var obj = JToken.Parse(result);
-            //            if (obj["result"]["count"] != null && obj["result"]["items"] != null)
-            //            {
-            //                return result;
-            //            }
-            //            else if (obj["status"] != null && obj["message"] != null)
-            //            {
-            //                MessageBox.Show(obj["message"].ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //                return null;
-            //            }
-            //            else
-            //            {
-            //                MessageBox.Show("Неизвестная ошибка в ответе.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //                return null;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Не удается разобрать JSON-ответ.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //            return null;
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        if (ex.Message.Contains("(500)"))
-            //        {
-            //            Thread.Sleep((int)numericUpDownPause.Value);
-            //            err_msg = ex.Message;
-            //            continue;
-            //        }
-            //        MessageBox.Show(ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //        Console.WriteLine(ex.ToString());
-            //        return null;
-            //    }
-            //}
-            //MessageBox.Show(err_msg, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //return null;
-        }
-
-        private static string GetJsonBody(string fullResponse)
-        {
-            // Найти индекс пустой строки, которая отделяет заголовки от тела
-            int bodyStartIndex = fullResponse.IndexOf("\r\n\r\n");
-
-            if (bodyStartIndex == -1)
-            {
-                throw new InvalidOperationException("Не удалось найти разделитель заголовков и тела ответа.");
-            }
-
-            // Получаем тело ответа после заголовков
-            string body = fullResponse.Substring(bodyStartIndex + 4);
-
-            // Удаляем `chunked` кодирование, оставляя только JSON
-            return RemoveChunkedEncoding(body);
-        }
-
-        private static string RemoveChunkedEncoding(string chunkedBody)
-        {
-            using (StringReader reader = new StringReader(chunkedBody))
-            {
-                string result = "";
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    // Пропустить строку, если это размер чанка
-                    if (int.TryParse(line, System.Globalization.NumberStyles.HexNumber, null, out _))
-                    {
-                        // Пропускаем размер чанка
-                        continue;
-                    }
-
-                    // Добавляем данные чанка в результат
-                    result += line;
-                }
-
-                return result;
-            }
         }
 
         public static bool IsNullOrWhiteSpace(string value)
@@ -932,28 +772,6 @@ namespace FGIS_Arshin
             {
                 MessageBox.Show("Файл справки недоступен или поврежден.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-    }
-
-    class MyTlsClient : DefaultTlsClient
-    {
-        public override TlsAuthentication GetAuthentication()
-        {
-            return new MyTlsAuthentication();
-        }
-    }
-
-    class MyTlsAuthentication : TlsAuthentication
-    {
-        public void NotifyServerCertificate(Certificate serverCertificate)
-        {
-            // Здесь можно добавить проверку сертификата сервера
-            Console.WriteLine("Сертификат сервера получен.");
-        }
-
-        public TlsCredentials GetClientCredentials(CertificateRequest certificateRequest)
-        {
-            return null;
         }
     }
 }
